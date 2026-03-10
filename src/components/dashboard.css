@@ -1,0 +1,12 @@
+/* Dashboard Component Styles */
+
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-container h1 {
+  margin: 0;
+  color: #333;
+  font-size: 2rem;
+}
+

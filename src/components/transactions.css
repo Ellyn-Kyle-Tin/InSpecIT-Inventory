@@ -1,0 +1,12 @@
+/* Transactions Component Styles */
+
+.transaction-records {
+  padding: 20px;
+}
+
+.transaction-records h1 {
+  margin: 0;
+  color: #333;
+  font-size: 2rem;
+}
+
