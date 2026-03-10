@@ -46,7 +46,7 @@ const Dashboard = ({ setActiveTab, userName }) => {
     <div className="dashboard-container">
 
       <div className="page-header">
-        <FiTrendingUp size={32} className="page-header-icon" />
+        <FiTrendingUp size={32} className="page-header-icon1" />
         <h1 className="page-header">Dashboard</h1>
       </div>
 
