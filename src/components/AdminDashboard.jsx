@@ -20,7 +20,14 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       case "transactions":
         return <TransactionRecords />
       case "clients":
-        return <div className="clients-container"><h1>Clients</h1></div>
+        return (
+          <div className="clients-container">
+            <div className="page-header">
+              <img src="/client.png" alt="Clients" className="page-header-icon" />
+              <h1 className="page-header-title">CLIENTS</h1>
+            </div>
+          </div>
+        )
       default:
         return <Dashboard setActiveTab={setActiveTab} userName={userName} />
     }

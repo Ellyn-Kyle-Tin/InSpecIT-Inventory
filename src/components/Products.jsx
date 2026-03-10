@@ -4,7 +4,10 @@ import "./products.css";
 const Products = () => {
   return (
     <div className="products-container">
-      <h1>Products</h1>
+      <div className="page-header">
+        <img src="/product.png" alt="Products" className="page-header-icon" />
+        <h1 className="page-header-title">PRODUCTS</h1>
+      </div>
     </div>
   );
 };

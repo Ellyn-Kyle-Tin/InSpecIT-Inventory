@@ -4,7 +4,10 @@ import "./transactions.css";
 const TransactionRecords = () => {
   return (
     <div className="transaction-records">
-      <h1>Transactions</h1>
+      <div className="page-header">
+        <img src="/transactions.png" alt="Transactions" className="page-header-icon" />
+        <h1 className="page-header-title">TRANSACTIONS</h1>
+      </div>
     </div>
   );
 };
