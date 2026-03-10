@@ -156,6 +156,15 @@
   line-height: 1.5;
 }
 
+/* ── Error Message ── */
+.error-msg {
+  color: rgba(197, 1, 2, 0.9);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 14px;
+  margin-top: -30px;
+}
+
 /* ── Input Fields ── */
 .field {
   margin-bottom: 18px;
@@ -247,4 +256,63 @@
 
 .switch-line button:hover {
   color: rgba(197, 1, 2, 1);
+}
+
+/* ── Dashboard ── */
+.dashboard-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  color: white;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 48px 56px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.dashboard-name {
+  color: rgba(197, 1, 2, 0.9);
+}
+
+.dashboard-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 32px;
+}
+
+.dashboard-tiles {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.dashboard-tile {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dashboard-tile:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn-logout {
+  width: auto;
+  padding: 10px 32px;
 }
