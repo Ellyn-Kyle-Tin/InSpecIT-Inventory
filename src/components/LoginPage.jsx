@@ -1,11 +1,24 @@
 import { useState } from "react";
 import "./login.css";
 
-export default function AuthPage() {
+export default function AuthPage({ onLogin }) {
   const [isRegister, setIsRegister] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const switchToRegister = () => setIsRegister(true);
   const switchToLogin = () => setIsRegister(false);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    
+    // Check for admin credentials
+    if (username === "admin" && password === "password123") {
+      onLogin("admin", "admin", "Admin");
+    } else {
+      alert("Invalid username or password");
+    }
+  };
 
   return (
     <div className="auth-root">
@@ -24,25 +37,33 @@ export default function AuthPage() {
         <div className={`form-box ${isRegister ? "hidden" : "visible"}`}>
           <h1>Log In</h1>
 
-          <div className="field">
-            <label>Username:</label>
-            <input
-              type="text"
-              placeholder="Enter your username"
-              autoComplete="username"
-            />
-          </div>
+          <form onSubmit={handleLogin}>
+            <div className="field">
+              <label>Username:</label>
+              <input
+                type="text"
+                placeholder="Enter your username"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
 
-          <div className="field">
-            <label>Password:</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              autoComplete="current-password"
-            />
-          </div>
+            <div className="field">
+              <label>Password:</label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-          <button className="btn-primary">Log In</button>
+            <button type="submit" className="btn-primary">Log In</button>
+          </form>
 
           <p className="switch-line">
             Don't have an account?{" "}
@@ -95,3 +116,5 @@ export default function AuthPage() {
     </div>
   );
 }
+
+
