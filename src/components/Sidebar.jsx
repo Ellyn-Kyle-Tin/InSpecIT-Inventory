@@ -1,16 +1,15 @@
-import { FiGrid, FiBox, FiPackage, FiRepeat, FiUsers } from "react-icons/fi"
+import "./sidebar.css"
 
 const Sidebar = ({ activeTab, setActiveTab, userRole, userName, onLogout }) => {
   const adminMenuItems = [
-    { id: "dashboard", label: "Dashboard", icon: FiGrid },
-    { id: "inventory", label: "Inventory", icon: FiBox },
-    { id: "products", label: "Products", icon: FiPackage },
-    { id: "transactions", label: "Transactions", icon: FiRepeat },
-    { id: "clients", label: "Clients", icon: FiUsers },
+    { id: "dashboard", label: "Dashboard", iconSrc: "/dashboard.png" },
+    { id: "inventory", label: "Inventory", iconSrc: "/inventory.png" },
+    { id: "products", label: "Products", iconSrc: "/product.png" },
+    { id: "transactions", label: "Transactions", iconSrc: "/transactions.png" },
+    { id: "clients", label: "Clients", iconSrc: "/client.png" },
   ]
 
   const employeeMenuItems = [
-    // No items for employee - inventory system only
   ]
 
   const menuItems = userRole === "admin" ? adminMenuItems : employeeMenuItems
@@ -20,7 +19,6 @@ const Sidebar = ({ activeTab, setActiveTab, userRole, userName, onLogout }) => {
     <aside className="sidebar">
       <nav className="sidebar-nav">
         {menuItems.map((item) => {
-          const Icon = item.icon
           return (
             <button
               key={item.id}
@@ -28,7 +26,11 @@ const Sidebar = ({ activeTab, setActiveTab, userRole, userName, onLogout }) => {
               onClick={() => setActiveTab(item.id)}
             >
               <span className="nav-icon">
-                <Icon />
+                <img
+                  src={item.iconSrc}
+                  alt={item.label}
+                  className="nav-icon-img"
+                />
               </span>
               <span className="nav-label">{item.label}</span>
             </button>
