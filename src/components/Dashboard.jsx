@@ -1,5 +1,7 @@
 import React from "react"
 import "./dashboard.css"
+import { FiDollarSign } from "react-icons/fi"
+import { FiPackage, FiShoppingCart, FiUsers, FiTrendingUp, FiAlertCircle } from "react-icons/fi"
 
 const Dashboard = ({ setActiveTab, userName }) => {
 
@@ -18,17 +20,33 @@ const Dashboard = ({ setActiveTab, userName }) => {
   })
 
   const quickActions = [
-    { id: "inventory", label: "View Inventory", icon: "/inventory.png" },
-    { id: "products", label: "View Products", icon: "/product.png" },
-    { id: "transactions", label: "View Transactions", icon: "/transactions.png" },
-    { id: "clients", label: "View Clients", icon: "/client.png" }
+    {
+      id: "inventory",
+      label: "View Inventory",
+      icon: <FiPackage size={24} />,
+    },
+    {
+      id: "products",
+      label: "Manage Products",
+      icon: <FiShoppingCart size={24} />,
+    },
+    {
+      id: "transactions",
+      label: "View Transactions",
+      icon: <FiDollarSign size={24} />,
+    },
+    {
+      id: "clients",
+      label: "View Clients",
+      icon: <FiUsers size={24} />,
+    },
   ]
 
   return (
     <div className="dashboard-container">
 
       <div className="page-header">
-        <img src="/dashboard.png" alt="Dashboard" className="page-header-icon" />
+        <FiTrendingUp size={32} className="page-header-icon" />
         <h1 className="page-header-title">Dashboard</h1>
       </div>
 
@@ -56,7 +74,7 @@ const Dashboard = ({ setActiveTab, userName }) => {
 
   <div className="summary-card">
     <div className="summary-top">
-      <img src="/inventory.png" alt="Total Stock" className="summary-icon-img"/>
+      <FiPackage size={60} className="summary-icon-img"/>
       <p className="summary-number">1,234</p>
     </div>
     <div className="summary-label">TOTAL STOCK</div>
@@ -64,7 +82,7 @@ const Dashboard = ({ setActiveTab, userName }) => {
 
   <div className="summary-card">
     <div className="summary-top">
-      <img src="/product.png" alt="Total Products" className="summary-icon-img"/>
+      <FiShoppingCart size={60} className="summary-icon-img"/>
       <p className="summary-number">567</p>
     </div>
     <div className="summary-label">TOTAL PRODUCTS</div>
@@ -72,7 +90,7 @@ const Dashboard = ({ setActiveTab, userName }) => {
 
   <div className="summary-card">
     <div className="summary-top">
-      <img src="/warning.png" alt="Out of Stock" className="summary-icon-img"/>
+      <FiAlertCircle size={45} className="summary-icon-img"/>
       <p className="summary-number">12</p>
     </div>
     <div className="summary-label">OUT OF STOCK</div>
@@ -90,7 +108,7 @@ const Dashboard = ({ setActiveTab, userName }) => {
               onClick={() => setActiveTab(action.id)}
             >
               <div className="action-icon">
-                <img src={action.icon} alt={action.label} />
+                {action.icon}
               </div>
               <span className="action-label">{action.label}</span>
             </button>

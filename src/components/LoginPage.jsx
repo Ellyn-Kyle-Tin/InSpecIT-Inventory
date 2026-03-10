@@ -13,7 +13,7 @@ export default function AuthPage({ onLogin }) {
     e.preventDefault();
     
     // Check for admin credentials
-    if (username === "admin" && password === "password123") {
+    if (username === "admin" && password === "123") {
       onLogin("admin", "admin", "Admin");
     } else {
       alert("Invalid username or password");
