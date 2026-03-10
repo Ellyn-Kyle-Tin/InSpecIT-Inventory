@@ -52,7 +52,7 @@
 
 .sidebar-logout-btn {
   padding: 0.5rem 1rem;
-  background-color: #dc2626;
+  background-color: #AE0404;
   color: white;
   border: none;
   border-radius: 6px;
@@ -94,7 +94,7 @@
 }
 
 .nav-item.active {
-  background: #dc2626;
+  background: #AE040F;
   color: #ffffff;
   font-weight: 500;
   border-radius: 0; /* no rounded corners even when active */
