@@ -88,6 +88,7 @@
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.10rem;
+  margin-top: 10px;
   margin-bottom: -1px;
   margin-left: -20px;
   position: relative;
