@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import "./products.css";
 
 const Products = () => {
+<<<<<<< HEAD
 
   // store selected row
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const data = Array(18).fill({
+=======
+  const data = Array(8).fill({
+>>>>>>> e61629b526da8cc346c4b0784de24257e3497041
     code: "SH-1C120-TxL-A1BK",
     name: "Cable",
     desc: "1 CORE x 120 MM2 BLACK COLOR",
@@ -23,8 +27,13 @@ const Products = () => {
       <div className="products-top">
 
         <div className="products-title">
+<<<<<<< HEAD
           <img src="/red_product.png" alt="product" />
           <h1>PRODUCTS</h1>
+=======
+          <img src="/product.png" alt="product" />
+          <h2>Products</h2>
+>>>>>>> e61629b526da8cc346c4b0784de24257e3497041
         </div>
 
         <div className="products-search">
@@ -68,6 +77,7 @@ const Products = () => {
 
           <tbody>
             {data.map((item, index) => (
+<<<<<<< HEAD
 
               <tr
                 key={index}
@@ -77,6 +87,9 @@ const Products = () => {
 
                 onClick={() => setSelectedProduct(index)}
               >
+=======
+              <tr key={index}>
+>>>>>>> e61629b526da8cc346c4b0784de24257e3497041
                 <td>{item.code}</td>
                 <td>{item.name}</td>
                 <td>{item.desc}</td>
@@ -85,7 +98,10 @@ const Products = () => {
                 <td>{item.stock}</td>
                 <td>{item.min}</td>
               </tr>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e61629b526da8cc346c4b0784de24257e3497041
             ))}
           </tbody>
 

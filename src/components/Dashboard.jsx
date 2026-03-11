@@ -1,7 +1,6 @@
 import React from "react"
 import "./dashboard.css"
-import { FiDollarSign } from "react-icons/fi"
-import { FiPackage, FiShoppingCart, FiUsers, FiTrendingUp, FiAlertCircle } from "react-icons/fi"
+import { FiPackage, FiShoppingCart, FiTrendingUp, FiAlertCircle } from "react-icons/fi"
 
 const Dashboard = ({ setActiveTab, userName }) => {
 
@@ -23,22 +22,22 @@ const Dashboard = ({ setActiveTab, userName }) => {
     {
       id: "inventory",
       label: "View Inventory",
-      icon: <FiPackage size={24} />,
+      iconSrc: "/inventory.png",
     },
     {
       id: "products",
       label: "Manage Products",
-      icon: <FiShoppingCart size={24} />,
+      iconSrc: "/product.png",
     },
     {
       id: "transactions",
       label: "View Transactions",
-      icon: <FiDollarSign size={24} />,
+      iconSrc: "/transactions.png",
     },
     {
       id: "clients",
       label: "View Clients",
-      icon: <FiUsers size={24} />,
+      iconSrc: "/client.png",
     },
   ]
 
@@ -52,12 +51,10 @@ const Dashboard = ({ setActiveTab, userName }) => {
 
       <div className="dashboard-top">
 
-        {/* LEFT */}
         <div className="welcome-text">
           <h2>WELCOME ! {userName || "ADMIN"}</h2>
         </div>
 
-        {/* RIGHT WINDMILL IMAGE */}
         <div className="windmill-wrapper">
           <img src="/windmill.png" alt="Windmill" className="windmill-image"/>
 
@@ -107,10 +104,10 @@ const Dashboard = ({ setActiveTab, userName }) => {
               className="quick-action-btn"
               onClick={() => setActiveTab(action.id)}
             >
-              <div className="action-icon">
-                {action.icon}
-              </div>
               <span className="action-label">{action.label}</span>
+              <div className="action-icon">
+                <img src={action.iconSrc} alt={action.label} />
+              </div>
             </button>
           ))}
         </div>
@@ -121,3 +118,4 @@ const Dashboard = ({ setActiveTab, userName }) => {
 }
 
 export default Dashboard
+
