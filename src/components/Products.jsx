@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   addMonths,
@@ -29,17 +28,6 @@ const Products = () => {
   const datePickerRef = useRef(null);
 
   const data = Array(8).fill({
-=======
-import React, { useState } from "react";
-import "./products.css";
-
-const Products = () => {
-
-  // store selected row
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const data = Array(18).fill({
->>>>>>> 07518f96be3334b80b3a52b1876718e9fd4a7730
     code: "SH-1C120-TxL-A1BK",
     name: "Cable",
     desc: "1 CORE x 120 MM2 BLACK COLOR",
@@ -134,8 +122,8 @@ const Products = () => {
       <div className="products-top">
 
         <div className="products-title">
-          <img src="/red_product.png" alt="product" />
-          <h1>PRODUCTS</h1>
+          <img src="/product.png" alt="product" />
+          <h2>Products</h2>
         </div>
 
         <div className="products-search">
@@ -280,23 +268,11 @@ const Products = () => {
           </thead>
 
           <tbody>
-<<<<<<< HEAD
             {filteredData.map((item, index) => (
               <tr
                 key={`${item.code}-${index}`}
                 className={selectedProductRow === index ? "active-row" : ""}
                 onClick={() => setSelectedProductRow((prev) => (prev === index ? null : index))}
-=======
-            {data.map((item, index) => (
-
-              <tr
-                key={index}
-
-                // automatic highlight when clicked
-                className={selectedProduct === index ? "active-row" : ""}
-
-                onClick={() => setSelectedProduct(index)}
->>>>>>> 07518f96be3334b80b3a52b1876718e9fd4a7730
               >
                 <td>{item.code}</td>
                 <td>{item.name}</td>
@@ -306,7 +282,6 @@ const Products = () => {
                 <td>{item.stock}</td>
                 <td>{item.min}</td>
               </tr>
-
             ))}
           </tbody>
 
