@@ -8,19 +8,20 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
-.page-header-icon4{
+.page-header-icon1{
   width: 32px;
+  margin-top: -34px;
   height: 32px;
   object-fit: contain;
   filter: brightness(0) saturate(100%) invert(15%) sepia(94%) saturate(7158%) hue-rotate(352deg) brightness(92%) contrast(86%);
 }
 
-.page-header-title {
-  margin: 0;
-  color: #dc2626;
+.page-header {
+  margin-top: -20px;
+  color: #AE0404;
   font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
