@@ -15,7 +15,7 @@ const Transaction = () => {
     <div className="transaction-records">
       <div className="page-header-wrapper">
         <FiFileText size={32} className="page-header-icon4" />
-        <h1 className="page-header-title-trans">LOVE KO TO</h1>
+        <h1 className="page-header-title-trans">Transactions</h1>
       </div>
 
       <nav className="transaction-navbar">
