@@ -4,26 +4,120 @@
   padding: 20px;
 }
 
-.page-header {
+.page-header-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0;
+  margin-top: -30px;
+  margin-left: -30px;
 }
 
-.page-header-icon1{
+.page-header-icon4 {
   width: 32px;
-  margin-top: -34px;
   height: 32px;
-  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
   filter: brightness(0) saturate(100%) invert(15%) sepia(94%) saturate(7158%) hue-rotate(352deg) brightness(92%) contrast(86%);
 }
 
-.page-header {
-  margin-top: -20px;
+.page-header-title-trans {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
   color: #AE0404;
   font-size: 2rem;
   font-weight: 700;
-  text-transform: uppercase;
 }
 
+/* White Content Card */
+
+.transactions-content-card {
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 16px;
+  margin-left: -25px;
+  margin-right: -25px;
+  height: 420px;
+}
+
+/* Red Inner Header Container */
+
+.transactions-inner-header {
+  background-color: #AE0404;
+  border-radius: 5px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.transactions-inner-header span {
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Navbar */
+
+.transaction-navbar {
+  display: flex;
+  gap: 45px; /* ← adjust this to control space between tabs */
+  margin-left: -px;
+}
+
+.transaction-nav-item {
+  background: none;
+  border: none;
+  border-bottom: none;
+  padding: 8px 4px;
+  font-size: 0.750rem;
+  font-weight: 570;
+  color: #000000;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.10rem;
+  margin-bottom: -1px;
+  margin-left: -20px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.transaction-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 6px); /* ← adjust to make border wider/narrower than text */
+  height: 2px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.transaction-nav-item:hover {
+  color: #AE0404;
+}
+
+.transaction-nav-item:hover::after {
+  background-color: #AE0404;
+}
+
+.transaction-nav-item.active {
+  color: #AE0404;
+}
+
+.transaction-nav-item.active::after {
+  background-color: #AE0404;
+}
