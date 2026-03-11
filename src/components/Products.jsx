@@ -6,7 +6,7 @@ const Products = () => {
   // store selected row
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const data = Array(18).fill({
+  const data = Array(8).fill({
     code: "SH-1C120-TxL-A1BK",
     name: "Cable",
     desc: "1 CORE x 120 MM2 BLACK COLOR",
@@ -71,12 +71,10 @@ const Products = () => {
 
               <tr
                 key={index}
-
-                // automatic highlight when clicked
                 className={selectedProduct === index ? "active-row" : ""}
-
                 onClick={() => setSelectedProduct(index)}
               >
+
                 <td>{item.code}</td>
                 <td>{item.name}</td>
                 <td>{item.desc}</td>
@@ -84,6 +82,7 @@ const Products = () => {
                 <td>{item.price}</td>
                 <td>{item.stock}</td>
                 <td>{item.min}</td>
+
               </tr>
 
             ))}

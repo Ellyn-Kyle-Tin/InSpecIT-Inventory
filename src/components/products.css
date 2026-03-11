@@ -17,23 +17,15 @@
   .products-title{
     display:flex;
     align-items:center;
-<<<<<<< HEAD
     gap:12px;
     margin:0;
-=======
-    gap:10px;
->>>>>>> e61629b526da8cc346c4b0784de24257e3497041
   }
   
   .products-title img{
     width:35px;
   }
   
-<<<<<<< HEAD
   .products-title h1{
-=======
-  .products-title h2{
->>>>>>> e61629b526da8cc346c4b0784de24257e3497041
     color:#b40000;
     font-size:26px;
   }
@@ -105,16 +97,9 @@
   /* TABLE */
   
   .products-table-wrapper{
-<<<<<<< HEAD
     background:transparent;
     padding:20px;
     border-radius:10px;
-=======
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
->>>>>>> e61629b526da8cc346c4b0784de24257e3497041
     max-height:350px;
     overflow-y:auto;
   }
@@ -126,7 +111,6 @@
     border-collapse:collapse;
   }
   
-<<<<<<< HEAD
   /* STICKY TABLE HEADER */
   
   .products-table thead{
@@ -146,11 +130,6 @@
   .products-table tbody{
     position:relative;
     z-index:1;
-=======
-  .products-table thead{
-    background:#c40000;
-    color:white;
->>>>>>> e61629b526da8cc346c4b0784de24257e3497041
   }
   
   .products-table th{
@@ -165,7 +144,6 @@
     border-bottom:1px solid #ddd;
   }
   
-<<<<<<< HEAD
   /* PRODUCT ROW STYLE */
   
   .products-table tbody tr{
@@ -195,12 +173,6 @@
   
   /* keep row borders */
   
-=======
-  .products-table tbody tr{
-    border:2px solid #c40000;
-  }
-  
->>>>>>> e61629b526da8cc346c4b0784de24257e3497041
   .products-table tbody tr:not(:last-child){
     border-bottom:2px solid #c40000;
   }
