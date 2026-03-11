@@ -1,137 +1,535 @@
+/* Products Component Styles */
+
+.products-container {
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.page-header-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(15%) sepia(94%) saturate(7158%) hue-rotate(352deg) brightness(92%) contrast(86%);
+}
+
+.page-header-title {
+  margin: 0;
+  color: #dc2626;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .products-container{
-    padding:40px;
-    background:#e9e9e9;
-    min-height:100vh;
-    font-family:Arial, Helvetica, sans-serif;
+  padding:40px;
+  background:transparent;
+  min-height:100vh;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+/* TOP HEADER */
+
+.products-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.products-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.products-title img{
+  width:34px;
+  height:34px;
+  object-fit:contain;
+  /* match Dashboard red icon tint */
+  filter: brightness(0) saturate(100%) invert(11%) sepia(83%) saturate(5901%) hue-rotate(347deg) brightness(92%) contrast(111%);
+}
+
+.products-title h2{
+  color:#AE040F;
+  font-size:2rem;
+  font-weight:900;
+  letter-spacing:-0.3px;
+  margin:0;
+  text-transform:uppercase;
+}
+
+/* SEARCH */
+
+.products-search{
+  position:relative;
+}
+
+.products-search input{
+  padding:8px 35px 8px 12px;
+  border:2px solid #c40000;
+  border-radius:8px;
+  outline:none;
+}
+
+.products-search img{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:16px;
+}
+
+/* CONTROLS */
+
+.products-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.date-picker-wrapper{
+  position:relative;
+}
+
+.date-btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 16px;
+  border:2px solid #c40000;
+  background:white;
+  border-radius:12px;
+  color:#c40000;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s ease;
+  width:100%;
+  min-width:200px;
+}
+
+.date-btn:hover{
+  background:#fff3f3;
+  border-color:#a00000;
+  box-shadow:0 2px 6px rgba(196,0,0,0.15);
+}
+
+.date-btn.active{
+  border-color:#a00000;
+  box-shadow:0 2px 8px rgba(196,0,0,0.2);
+}
+
+.date-btn:active{
+  transform:scale(0.98);
+}
+
+.date-btn img{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+
+.date-text{
+  flex:1;
+  text-align:left;
+  font-size:14px;
+}
+
+.chevron-icon{
+  width:18px;
+  height:18px;
+  color:#c40000;
+  flex-shrink:0;
+  transition:transform 0.3s ease;
+}
+
+.chevron-icon.rotated{
+  transform:rotate(180deg);
+}
+
+.calendar-dropdown{
+  position:absolute;
+  top:100%;
+  left:0;
+  margin-top:8px;
+  padding:14px 14px 12px;
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:20px;
+  background:#ffffff;
+  z-index:100;
+  box-shadow:0 12px 32px rgba(0,0,0,0.15);
+  min-width:272px;
+  width:100%;
+  animation:slideDown 0.2s ease;
+}
+
+@keyframes slideDown{
+  from{
+    opacity:0;
+    transform:translateY(-10px);
   }
-  
-  /* TOP HEADER */
-  
-  .products-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+  to{
+    opacity:1;
+    transform:translateY(0);
   }
-  
-  .products-title{
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  
-  .products-title img{
-    width:35px;
-  }
-  
-  .products-title h2{
-    color:#b40000;
-    font-size:26px;
-  }
-  
-  /* SEARCH */
-  
-  .products-search{
-    position:relative;
-  }
-  
-  .products-search input{
-    padding:8px 35px 8px 12px;
-    border:2px solid #c40000;
-    border-radius:8px;
-    outline:none;
-  }
-  
-  .products-search img{
-    position:absolute;
-    right:8px;
-    top:50%;
-    transform:translateY(-50%);
-    width:16px;
-  }
-  
-  /* CONTROLS */
-  
-  .products-controls{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-  }
-  
-  .date-btn{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 14px;
-    border:2px solid #c40000;
-    background:white;
-    border-radius:8px;
-    color:#c40000;
-    font-weight:600;
-    cursor:pointer;
-  }
-  
-  .date-btn img{
-    width:16px;
-  }
-  
-  .add-btn{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 16px;
-    border:none;
-    background:#c40000;
-    color:white;
-    border-radius:8px;
-    font-weight:600;
-    cursor:pointer;
-  }
-  
-  .add-btn img{
-    width:16px;
-  }
-  
-  /* TABLE */
-  
-  .products-table-wrapper{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    max-height:350px;
-    overflow-y:auto;
-  }
-  
-  /* TABLE STYLE */
-  
-  .products-table{
-    width:100%;
-    border-collapse:collapse;
-  }
-  
-  .products-table thead{
-    background:#c40000;
-    color:white;
-  }
-  
-  .products-table th{
-    padding:10px;
-    font-size:13px;
-  }
-  
-  .products-table td{
-    padding:10px;
-    text-align:center;
-    font-size:12px;
-    border-bottom:1px solid #ddd;
-  }
-  
-  .products-table tbody tr{
-    border:2px solid #c40000;
-  }
-  
-  .products-table tbody tr:not(:last-child){
-    border-bottom:2px solid #c40000;
-  }
+}
+
+.calendar-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.calendar-title{
+  font-size:20px;
+  font-weight:800;
+  color:#2b2b2b;
+  letter-spacing:-0.5px;
+  line-height:1.05;
+}
+
+.calendar-top-icon{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+  opacity:0.9;
+}
+
+.calendar-controls{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.calendar-selects{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.calendar-select{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+
+.calendar-select select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  border:0;
+  outline:0;
+  background:#f1f1f1;
+  color:#2b2b2b;
+  border-radius:10px;
+  padding:7px 32px 7px 10px;
+  font-weight:700;
+  font-size:12px;
+  cursor:pointer;
+  min-width:96px;
+}
+
+.calendar-select-icon{
+  position:absolute;
+  right:12px;
+  pointer-events:none;
+  color:#6b6b6b;
+}
+
+.calendar-nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.calendar-nav-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  border:none;
+  background:#f1f1f1;
+  border-radius:10px;
+  cursor:pointer;
+  color:#4b4b4b;
+  transition:all 0.2s ease;
+}
+
+.calendar-nav-btn:hover{
+  background:#eaeaea;
+  color:#2b2b2b;
+}
+
+.calendar-weekdays{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  margin:4px 0 6px;
+}
+
+.calendar-weekday{
+  text-align:center;
+  font-size:10px;
+  font-weight:800;
+  color:#2b2b2b;
+  padding:7px 0 5px;
+  text-transform:uppercase;
+  letter-spacing:0.6px;
+}
+
+.calendar-weekday:first-child{
+  color:#f2a63a;
+}
+
+.calendar-days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+
+.calendar-day{
+  aspect-ratio:1;
+  border:none;
+  background:transparent;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:800;
+  color:#2b2b2b;
+  cursor:pointer;
+  transition:all 0.15s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:28px;
+}
+
+.calendar-day:hover{
+  background:#f7f7f7;
+}
+
+.calendar-day.other-month{
+  color:#cfcfcf;
+  opacity:0.9;
+}
+
+.calendar-day.sunday{
+  color:#f2a63a;
+}
+
+.calendar-day.selected{
+  color:#f2a63a;
+  position:relative;
+}
+
+.calendar-day.selected::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  bottom:4px;
+  transform:translateX(-50%);
+  width:14px;
+  height:3px;
+  border-radius:999px;
+  background:#f2a63a;
+}
+
+.calendar-footer{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.calendar-today-btn{
+  padding:7px 12px;
+  border:none;
+  background:#f1f1f1;
+  color:#2b2b2b;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  transition:all 0.2s ease;
+}
+
+.calendar-today-btn:hover{
+  background:#eaeaea;
+}
+
+.calendar-confirm-btn{
+  flex:1;
+  padding:9px 12px;
+  border:none;
+  background:#f2a63a;
+  color:#ffffff;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+  transition:transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow:0 7px 16px rgba(242, 166, 58, 0.30);
+}
+
+.calendar-confirm-btn:hover{
+  background:#ea9a2a;
+  box-shadow:0 12px 28px rgba(242, 166, 58, 0.42);
+}
+
+.calendar-confirm-btn:active{
+  transform:translateY(1px);
+}
+
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0, 0, 0, 0);
+  white-space:nowrap;
+  border:0;
+}
+
+.date-input:hover{
+  border-color:#a00000;
+  box-shadow:0 6px 16px rgba(0,0,0,0.2);
+}
+
+.date-input:focus{
+  border-color:#c40000;
+  box-shadow:0 4px 12px rgba(196,0,0,0.25);
+}
+
+.date-input::-webkit-calendar-picker-indicator{
+  cursor:pointer;
+  padding:4px;
+  border-radius:4px;
+  background-color:#f5f5f5;
+  transition:background-color 0.2s ease;
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover{
+  background-color:#e0e0e0;
+}
+
+/* Firefox date input styling */
+.date-input::-moz-calendar-picker-indicator{
+  cursor:pointer;
+  padding:4px;
+  border-radius:4px;
+}
+
+/* Clean up the date input appearance */
+.date-input::-webkit-datetime-edit-text{
+  color:#333;
+  padding:0 4px;
+}
+
+.date-input::-webkit-datetime-edit-month-field,
+.date-input::-webkit-datetime-edit-day-field,
+.date-input::-webkit-datetime-edit-year-field{
+  color:#333;
+  padding:0 2px;
+}
+
+.date-input::-webkit-datetime-edit-month-field:focus,
+.date-input::-webkit-datetime-edit-day-field:focus,
+.date-input::-webkit-datetime-edit-year-field:focus{
+  background-color:#fff3f3;
+  color:#c40000;
+  border-radius:3px;
+}
+
+.add-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 16px;
+  border:none;
+  background:#c40000;
+  color:white;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.add-btn img{
+  width:16px;
+}
+
+/* TABLE */
+
+.products-table-wrapper{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  max-height:calc(100vh - 260px);
+  min-height:420px;
+  overflow-y:auto;
+}
+
+/* TABLE STYLE */
+
+.products-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.products-table thead{
+  background:#c40000;
+  color:white;
+}
+
+.products-table th{
+  padding:10px;
+  font-size:13px;
+}
+
+.products-table td{
+  padding:10px;
+  text-align:center;
+  font-size:12px;
+  border-bottom:1px solid #ddd;
+}
+
+.products-table tbody tr{
+  border:2px solid #c40000;
+  cursor:pointer;
+  transition:background 0.2s ease, transform 0.2s ease;
+}
+
+.products-table tbody tr:hover{
+  background:#ffe5e5;
+}
+
+/* active selected row (LIGHT RED) */
+.active-row{
+  background:#ffd6d6;
+  transform:scale(1.005);
+}
+
+.active-row td{
+  color:#8b0000;
+  font-weight:600;
+}
+
+.products-table tbody tr:not(:last-child){
+  border-bottom:2px solid #c40000;
+}
+

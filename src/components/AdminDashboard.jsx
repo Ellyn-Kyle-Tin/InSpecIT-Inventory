@@ -12,7 +12,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
-        return <Dashboard setActiveTab={setActiveTab} userName={userName} />
+        return <Dashboard setActiveTab={setActiveTab} userName={userName} userRole={userRole} />
       case "inventory":
         return <Inventory userName={userName} />
       case "products":
@@ -22,7 +22,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       case "clients":
         return <Clients />
       default:
-        return <Dashboard setActiveTab={setActiveTab} userName={userName} />
+        return <Dashboard setActiveTab={setActiveTab} userName={userName} userRole={userRole} />
     }
   }
 
