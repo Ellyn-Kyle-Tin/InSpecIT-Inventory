@@ -122,7 +122,7 @@ const Products = () => {
       <div className="products-top">
 
         <div className="products-title">
-          <img src="/product.png" alt="product" />
+          <img src="/red_product.png" alt="product" />
           <h2>Products</h2>
         </div>
 
