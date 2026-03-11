@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "./App.css"
-import LoginPage from "./components/LoginPage"
+import Login from "./components/Login"
 import AdminDashboard from "./components/AdminDashboard"
 import EmployeeDashboard from "./components/EmployeeDashboard"
 import { mockFirestore, serverTimestamp } from "./simpleAuth"
@@ -45,7 +45,7 @@ function App() {
   }
 
   if (!currentUser) {
-    return <LoginPage onLogin={handleLogin} />
+    return <Login onLogin={handleLogin} />
   }
 
   return (

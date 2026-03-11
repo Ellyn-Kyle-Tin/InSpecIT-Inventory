@@ -2,9 +2,9 @@ import { useState } from "react"
 import Sidebar from "./Sidebar"
 import Dashboard from "./Dashboard"
 import Inventory from "./Inventory"
-import TransactionRecords from "./TransactionRecords"
+import Transaction from "./Transaction"
 import Products from "./Products"
-import "./clients.css"
+import Clients from "./Clients"
 
 const AdminDashboard = ({ onLogout, userName, userRole }) => {
   const [activeTab, setActiveTab] = useState("dashboard")
@@ -18,9 +18,9 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       case "products":
         return <Products />
       case "transactions":
-        return <TransactionRecords />
+        return <Transaction />
       case "clients":
-        return <div className="clients-container"><h1>Clients</h1></div>
+        return <Clients />
       default:
         return <Dashboard setActiveTab={setActiveTab} userName={userName} />
     }

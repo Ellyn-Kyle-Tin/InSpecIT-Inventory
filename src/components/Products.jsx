@@ -3,6 +3,7 @@ import "./products.css";
 
 const Products = () => {
   return (
+<<<<<<< HEAD
     <div className="app-layout">
 
       {/* SIDEBAR */}
@@ -133,6 +134,13 @@ const Products = () => {
 
       </div>
 
+=======
+    <div className="products-container">
+      <div className="page-header">
+        <img src="/product.png" alt="Products" className="page-header-icon3" />
+        <h1 className="page-header-title">PRODUCTS</h1>
+      </div>
+>>>>>>> 44ffb565bf00271af249f0cbf4f53157b1129699
     </div>
   );
 };
