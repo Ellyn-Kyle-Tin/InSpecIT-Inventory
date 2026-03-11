@@ -125,7 +125,7 @@ const Products = () => {
       <div className="products-top">
 
         <div className="products-title">
-          <img src="/product.png" alt="product" />
+          <img src="/red_product.png" alt="product" />
           <h2>Products</h2>
         </div>
 
@@ -277,7 +277,6 @@ const Products = () => {
                 className={selectedProduct === index ? "active-row" : ""}
                 onClick={() => setSelectedProduct(index)}
               >
-
                 <td>{item.code}</td>
                 <td>{item.name}</td>
                 <td>{item.desc}</td>
@@ -285,7 +284,6 @@ const Products = () => {
                 <td>{item.price}</td>
                 <td>{item.stock}</td>
                 <td>{item.min}</td>
-
               </tr>
             ))}
           </tbody>
