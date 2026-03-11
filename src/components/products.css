@@ -17,14 +17,15 @@
   .products-title{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
+    margin:0;
   }
   
   .products-title img{
     width:35px;
   }
   
-  .products-title h2{
+  .products-title h1{
     color:#b40000;
     font-size:26px;
   }
@@ -96,10 +97,9 @@
   /* TABLE */
   
   .products-table-wrapper{
-    background:white;
+    background:transparent;
     padding:20px;
     border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
     max-height:350px;
     overflow-y:auto;
   }
@@ -111,9 +111,25 @@
     border-collapse:collapse;
   }
   
+  /* STICKY TABLE HEADER */
+  
   .products-table thead{
+    background:transparent;
+  }
+  
+  .products-table thead th{
+    position:sticky;
+    top:0;
     background:#c40000;
     color:white;
+    z-index:100;
+  }
+  
+  /* TABLE BODY */
+  
+  .products-table tbody{
+    position:relative;
+    z-index:1;
   }
   
   .products-table th{
@@ -128,9 +144,34 @@
     border-bottom:1px solid #ddd;
   }
   
+  /* PRODUCT ROW STYLE */
+  
   .products-table tbody tr{
     border:2px solid #c40000;
+    cursor:pointer;
+    transition:all 0.25s ease;
   }
+  
+  /* hover effect */
+  
+  .products-table tbody tr:hover{
+    background:#ffe5e5;
+  }
+  
+  /* active selected row (LIGHT RED) */
+  
+  .active-row{
+    background:#ffd6d6; /* light red highlight */
+    transform:scale(1.01);
+    transition:all 0.25s ease;
+  }
+  
+  .active-row td{
+    color:#8b0000; /* dark red text for readability */
+    font-weight:600;
+  }
+  
+  /* keep row borders */
   
   .products-table tbody tr:not(:last-child){
     border-bottom:2px solid #c40000;
