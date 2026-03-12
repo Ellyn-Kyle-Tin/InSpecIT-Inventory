@@ -9,7 +9,6 @@ import Projects from "./Projects"
 
 const AdminDashboard = ({ onLogout, userName, userRole }) => {
   const [activeTab, setActiveTab] = useState("dashboard")
-  const [selectedClient, setSelectedClient] = useState(null)
 
   const renderContent = () => {
     switch (activeTab) {
@@ -22,10 +21,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       case "transactions":
         return <Transaction />
       case "clients":
-        if (selectedClient) {
-          return <Projects client={selectedClient} onBack={() => setSelectedClient(null)} />
-        }
-        return <Clients onSelectClient={(client) => setSelectedClient(client)} />
+        return <Clients />
       default:
         return <Dashboard setActiveTab={setActiveTab} userName={userName} userRole={userRole} />
     }
@@ -47,7 +43,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       </header>
 
       <div className="dashboard-content">
-        <Sidebar
+        <Sidebar 
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onLogout={onLogout}
