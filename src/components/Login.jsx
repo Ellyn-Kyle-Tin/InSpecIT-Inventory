@@ -6,7 +6,7 @@ export default function AuthPage({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const API_BASE =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/inventory/api";
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/InSpecIT-Inventory/api";
 
   const [loginNotice, setLoginNotice] = useState("");
   const [loginWarning, setLoginWarning] = useState("");
