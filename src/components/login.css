@@ -125,6 +125,39 @@
   transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
+/* Register form: wider + two columns, longer inputs */
+.form-box-register {
+  max-width: 720px;
+}
+
+.form-box-register .field input,
+.form-box-register .field select {
+  min-width: 0;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+}
+
+.register-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+  margin-bottom: 4px;
+}
+
+.register-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.register-col .field {
+  margin-bottom: 16px;
+}
+
+.register-col .field:last-child {
+  margin-bottom: 0;
+}
+
 .form-box.visible {
   opacity: 1;
   pointer-events: all;
@@ -204,6 +237,73 @@
   box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
 }
 
+/* Confirm password match: green when same as password */
+.field input.password-match {
+  border-color: rgba(22, 163, 74, 0.8);
+  background: #f0fdf4;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
+}
+
+.field input.password-match:focus {
+  border-color: rgba(22, 163, 74, 0.95);
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2);
+}
+
+/* Password field with Show/Hide button */
+.password-field-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.password-field-wrap input {
+  flex: 1;
+  padding-right: 56px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 10px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background: #f9fafb;
+  color: #374151;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.toggle-password-btn:hover {
+  background: #f3f4f6;
+  border-color: rgba(197, 1, 2, 0.4);
+  color: rgba(197, 1, 2, 0.9);
+}
+
+/* Select (Role dropdown) */
+.field select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid rgba(0, 0, 0, 0.50);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #111827;
+  background: #f9fafb;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(197, 1, 2, 0.08);
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.field select:focus {
+  border-color: rgba(109, 106, 106, 0.8);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(92, 90, 90, 0.12);
+}
+
 /* ── Primary Button ── */
 .btn-primary {
   width: 100%;
@@ -216,7 +316,6 @@
   font-weight: 600;
   cursor: pointer;
   letter-spacing: 0.025em;
-  margin-top: 6px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 4px 22px rgba(197, 1, 2, 0.38);
 }
@@ -229,6 +328,62 @@
 .btn-primary:active {
   transform: translateY(0);
   box-shadow: 0 4px 14px rgba(197, 1, 2, 0.3);
+}
+
+/* Toast (auto dismiss) for registration success */
+.auth-toast {
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  pointer-events: none;
+}
+
+.auth-toast-card {
+  width: min(520px, calc(100vw - 36px));
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+  border-left: 6px solid rgba(22, 163, 74, 0.85);
+  text-align: center;
+}
+
+.auth-toast-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.auth-toast-text {
+  font-size: 0.92rem;
+  color: #4b5563;
+}
+
+/* Sign Up button: shorter width + top margin */
+.form-box-register .btn-primary {
+  width: auto;
+  min-width: 160px;
+  padding: 13px 36px;
+  margin-top: 24px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Log In button: centered (clean alignment) */
+.form-box:not(.form-box-register) .btn-primary {
+  width: auto;
+  min-width: 160px;
+  padding: 13px 36px;
+  display: block;
+  margin: 14px auto 0;
 }
 
 /* ── Switch Line ── */

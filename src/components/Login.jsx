@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./login.css";
 
 export default function AuthPage({ onLogin }) {
@@ -18,6 +18,14 @@ export default function AuthPage({ onLogin }) {
   });
 
   // Register form state
+  const initialRegisterForm = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    role: ""
+  };
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -30,17 +38,36 @@ export default function AuthPage({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
-  const switchToRegister = () => {
+  const resetRegisterForm = () => {
+    setFormData(initialRegisterForm);
+    setFieldErrors({});
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+    setLoading(false);
+  };
+
+  const resetLoginForm = () => {
+    setUsername("");
+    setPassword("");
     setLoginNotice("");
     setLoginWarning("");
     setLoginFieldErrors({ username: false, password: false });
+  };
+
+  useEffect(() => {
+    if (!registerSuccess) return;
+    const t = setTimeout(() => setRegisterSuccess(false), 2000);
+    return () => clearTimeout(t);
+  }, [registerSuccess]);
+
+  const switchToRegister = () => {
+    resetLoginForm();
     setIsRegister(true);
   };
   const switchToLogin = () => {
-    setLoginNotice("");
-    setLoginWarning("");
-    setLoginFieldErrors({ username: false, password: false });
+    resetRegisterForm();
     setIsRegister(false);
   };
 
@@ -134,7 +161,8 @@ export default function AuthPage({ onLogin }) {
         return;
       }
 
-      alert("Registration successful! Please login with your new account.");
+      // Show custom UI confirmation instead of browser alert
+      setRegisterSuccess(true);
       switchToLogin();
     } catch (err) {
       console.error("Registration error:", err);
@@ -194,21 +222,133 @@ export default function AuthPage({ onLogin }) {
         </div>
 
         {/* REGISTER FORM */}
-        <div className={`form-box ${isRegister ? "visible" : "hidden"}`}>
+        <div className={`form-box form-box-register ${isRegister ? "visible" : "hidden"}`}>
           <h1>Sign Up</h1>
-          {/* ... keep your register form JSX ... */}
-          <button 
-            className="btn-primary" 
+          <p className="subtitle">Create your account to get started.</p>
+
+          <div className="register-fields">
+            <div className="register-col register-col-left">
+              <div className="field">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  className={fieldErrors.fullName ? "error" : ""}
+                />
+              </div>
+              <div className="field">
+                <label>Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Choose a username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  className={fieldErrors.username ? "error" : ""}
+                />
+              </div>
+              <div className="field">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={fieldErrors.email ? "error" : ""}
+                />
+              </div>
+            </div>
+            <div className="register-col register-col-right">
+              <div className="field">
+                <label>Password</label>
+                <div className="password-field-wrap">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Create a password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className={fieldErrors.password ? "error" : ""}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="toggle-password-btn"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div className="field">
+                <label>Confirm Password</label>
+                <div className="password-field-wrap">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className={
+                      fieldErrors.confirmPassword
+                        ? "error"
+                        : formData.confirmPassword && formData.password === formData.confirmPassword
+                          ? "password-match"
+                          : ""
+                    }
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="toggle-password-btn"
+                  >
+                    {showConfirmPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div className="field">
+                <label>Role</label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  className={fieldErrors.role ? "error" : ""}
+                >
+                  <option value="">Select your role</option>
+                  <option value="employee">Employee</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button
+            className="btn-primary"
             onClick={handleRegister}
             disabled={loading}
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
+
           <p className="switch-line">
             Already have an account? <button onClick={switchToLogin}>Log in</button>
           </p>
         </div>
       </div>
+
+      {registerSuccess && (
+        <div className="auth-toast" role="status" aria-live="polite">
+          <div className="auth-toast-card">
+            <div className="auth-toast-title">Account created</div>
+            <div className="auth-toast-text">
+              Registration successful! Please log in with your new account.
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

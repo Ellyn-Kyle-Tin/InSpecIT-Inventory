@@ -12,7 +12,7 @@ function getStatus(stocks, minStock) {
   return { label: "In Stock", type: "in" }
 }
 
-const Inventory = ({ userName }) => {
+const Inventory = () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState("")
@@ -131,42 +131,42 @@ const Inventory = ({ userName }) => {
   const barLow = barTotal ? (stats.lowStock / barTotal) * 100 : 0
 
   return (
-    <div className="inventory">
-      <div className="inventory-header">
-        <div className="db-title1">
-          <img src="/inventory.png" alt="Inventory" className="db-title-icon1" />
-          <h1 className="db-title-text1">Inventory</h1>
+    <div className="inventory_root">
+      <div className="inventory_head">
+        <div className="inventory_title">
+          <img src="/inventory.png" alt="Inventory" className="inventory_icon" />
+          <h1 className="inventory_text">Inventory</h1>
         </div>
       </div>
 
       {/* Summary cards */}
-      <div className="inventory-summary">
-        <div className="inv-card inv-card-assets">
-          <div className="inv-card-label">Total Assets Value</div>
-          <div className="inv-card-value">
+      <div className="inventory_summary">
+        <div className="inv_card card_assets">
+          <div className="card_label">Total Assets Value</div>
+          <div className="card_value">
             Php {stats.totalValue.toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         </div>
-        <div className="inv-card inv-card-products">
-          <div className="inv-card-label">{stats.totalProducts} Product</div>
-          <div className="inv-bar">
+        <div className="inv_card card_products">
+          <div className="card_label">{stats.totalProducts} Product</div>
+          <div className="inv_bar">
             <div
-              className="inv-bar-seg inv-bar-in"
+              className="bar_seg bar_in"
               style={{ width: `${barIn}%` }}
               title={`In stock: ${stats.inStock}`}
             />
             <div
-              className="inv-bar-seg inv-bar-out"
+              className="bar_seg bar_out"
               style={{ width: `${barOut}%` }}
               title={`Out of stock: ${stats.outStock}`}
             />
             <div
-              className="inv-bar-seg inv-bar-low"
+              className="bar_seg bar_low"
               style={{ width: `${barLow}%` }}
               title={`Low stock: ${stats.lowStock}`}
             />
           </div>
-          <div className="inv-bar-labels">
+          <div className="bar_labels">
             <span>In stock: {stats.inStock}</span>
             <span>Out of stock: {stats.outStock}</span>
             <span>Low stock: {stats.lowStock}</span>
@@ -175,33 +175,33 @@ const Inventory = ({ userName }) => {
       </div>
 
       {/* Search and filter */}
-      <div className="inventory-controls">
-        <div className="inv-search-wrap">
+      <div className="inventory_controls">
+        <div className="search_wrap">
           <input
             type="text"
-            className="inv-search"
+            className="search_input"
             placeholder="Search by inventory ID or product ID..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <img src="/search.png" alt="Search" className="inv-search-icon" />
+          <img src="/search.png" alt="Search" className="search_icon" />
         </div>
-        <div className="inv-category-wrap" ref={categoryRef}>
+        <div className="filter_wrap" ref={categoryRef}>
           <button
             type="button"
-            className="inv-category-btn"
+            className="filter_btn"
             onClick={() => setShowCategoryDropdown((v) => !v)}
           >
             Category
-            <FiChevronDown className="inv-chevron" />
+            <FiChevronDown className="filter_icon" />
           </button>
           {showCategoryDropdown && (
-            <div className="inv-category-dropdown">
+            <div className="filter_menu">
               {CATEGORIES.map((c) => (
                 <button
                   key={c}
                   type="button"
-                  className={`inv-category-opt ${category === c ? "active" : ""}`}
+                  className={`filter_item ${category === c ? "active" : ""}`}
                   onClick={() => {
                     setCategory(c)
                     setShowCategoryDropdown(false)
@@ -216,8 +216,8 @@ const Inventory = ({ userName }) => {
       </div>
 
       {/* Table */}
-      <div className="inv-table-wrap">
-        <table className="inv-table">
+      <div className="table_wrap">
+        <table className="table_main">
           <thead>
             <tr>
               <th>INVENTORY ID</th>
@@ -232,13 +232,13 @@ const Inventory = ({ userName }) => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={7} className="inv-loading-cell">
+                <td colSpan={7} className="table_loading">
                   Loading inventory...
                 </td>
               </tr>
             ) : filteredItems.length === 0 ? (
               <tr>
-                <td colSpan={7} className="inv-empty-cell">
+                <td colSpan={7} className="table_empty">
                   No inventory items found.
                 </td>
               </tr>
@@ -253,14 +253,14 @@ const Inventory = ({ userName }) => {
                     <td>{item.stocks}</td>
                     <td>{item.minStock}</td>
                     <td>
-                      <span className={`inv-status inv-status-${status.type}`}>
+                      <span className={`status_pill status_${status.type}`}>
                         {status.label}
                       </span>
                     </td>
                     <td>
                       <button
                         type="button"
-                        className="inv-restock-btn"
+                        className="action_btn"
                         onClick={() => handleRestock(item)}
                         disabled={restockLoading}
                       >
@@ -277,43 +277,40 @@ const Inventory = ({ userName }) => {
 
       {/* Restock modal */}
       {restockItem && (
-        <div className="inv-modal-overlay" onClick={() => !restockLoading && setRestockItem(null)}>
-          <div
-            className="inv-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="inv-modal-title">Restock Product</h3>
-            <p className="inv-modal-desc">
+        <div className="modal_overlay" onClick={() => !restockLoading && setRestockItem(null)}>
+          <div className="modal_card" onClick={(e) => e.stopPropagation()}>
+            <h3 className="modal_title">Restock Product</h3>
+            <p className="modal_desc">
               {restockItem.inventoryId} — {restockItem.productId}
               {restockItem.productName && ` (${restockItem.productName})`}
             </p>
-            <p className="inv-modal-current">
+            <p className="modal_info">
               Current stock: <strong>{restockItem.stocks}</strong>
             </p>
             <form onSubmit={handleRestockSubmit}>
-              <label className="inv-modal-label">
+              <label className="modal_label">
                 Quantity to add:
               </label>
               <input
                 type="number"
                 min="1"
-                className="inv-modal-input"
+                className="modal_input"
                 value={restockQty}
                 onChange={(e) => setRestockQty(e.target.value)}
                 placeholder="Enter quantity"
                 required
                 disabled={restockLoading}
               />
-              <div className="inv-modal-actions">
+              <div className="modal_actions">
                 <button
                   type="button"
-                  className="inv-modal-cancel"
+                  className="modal_cancel"
                   onClick={() => !restockLoading && setRestockItem(null)}
                   disabled={restockLoading}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="inv-modal-confirm" disabled={restockLoading}>
+                <button type="submit" className="modal_confirm" disabled={restockLoading}>
                   {restockLoading ? "Updating..." : "Update Stock"}
                 </button>
               </div>
