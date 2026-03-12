@@ -291,15 +291,9 @@ const Products = () => {
 
       <div className="products-top">
 
-<<<<<<< HEAD
         <div className="products-title">
           <img src="/red_product.png" alt="product"/>
           <h2>Products</h2>
-=======
-        <div className="db-title2">
-          <img src="/product.png" alt="Products" className="db-title-icon2" />
-          <h2 className="db-title-text2">Products</h2>
->>>>>>> 56771b898e442b1b8443aa1ad48d012f26c21a80
         </div>
 
         <div className="products-search">
