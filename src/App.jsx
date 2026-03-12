@@ -62,8 +62,11 @@ function App() {
         pauseOnHover
       />
       
-      {/* Show AdminDashboard for both admin and employee users */}
-      <AdminDashboard onLogout={handleLogout} userName={userName} userRole={userRole} />
+      {userRole === "admin" ? (
+        <AdminDashboard onLogout={handleLogout} userName={userName} userRole={userRole} />
+      ) : (
+        <EmployeeDashboard onLogout={handleLogout} userName={userName} />
+      )}
     </div>
   )
 }

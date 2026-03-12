@@ -4,9 +4,9 @@ import "./clients.css"
 const Clients = () => {
   return (
     <div className="clients-container">
-      <div className="page-header">
-        <img src="/red_client.png" alt="Clients" className="page-header-icon5" />
-        <h1 className="page-header-title">CLIENTS</h1>
+      <div className="db-title">
+        <img src="/client.png" alt="Clients" className="db-title-icon" />
+        <h1 className="db-title-text">Clients</h1>
       </div>
     </div>
   )

@@ -196,6 +196,14 @@
   box-shadow: 0 0 0 4px rgba(92, 90, 90, 0.12);
 }
 
+/* Error state (used by both login + register) */
+.field input.error,
+.field select.error {
+  border-color: rgba(220, 38, 38, 0.95);
+  background: #fff1f2;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
 /* ── Primary Button ── */
 .btn-primary {
   width: 100%;

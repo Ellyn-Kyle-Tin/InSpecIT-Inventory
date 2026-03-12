@@ -1,13 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import "./dashboard.css"
-import {
-  FiAlertCircle,
-  FiBox,
-  FiClock,
-  FiFileText,
-  FiPackage,
-  FiUsers,
-} from "react-icons/fi"
+import { FiClock } from "react-icons/fi"
 
 const Dashboard = ({ setActiveTab, userRole }) => {
 
@@ -75,111 +68,115 @@ const Dashboard = ({ setActiveTab, userRole }) => {
   const welcomeMessage = userRole === "admin" ? "Welcome back, Admin!" : "Welcome back, Employee!"
 
   return (
-    <div className="dashboard-container">
-      <div className="dash-topbar">
-        <div className="dash-page-title">
-          <img className="dash-page-icon-img" src="/dashboard.png" alt="Dashboard" />
-          <span className="dash-page-text">Dashboard</span>
+    <div className="db-wrap">
+      <div className="db-top">
+        <div className="db-title">
+          <img className="db-title-icon" src="/dashboard.png" alt="Dashboard" />
+          <span className="db-title-text">Dashboard</span>
         </div>
 
-        <div className="dash-header-text">
-          <h2 className="dash-welcome">{welcomeMessage}</h2>
-          <p className="dash-date">
+        <div className="db-header">
+          <h2 className="db-welcome">{welcomeMessage}</h2>
+          <p className="db-date">
             {date}
-            <span className="dash-date-sep">•</span>
+            <span className="db-date-sep">•</span>
             {time}
           </p>
         </div>
       </div>
 
-      <div className="dash-grid">
+      <div className="db-grid">
         {/* Inventory Summary */}
-        <section className="dash-card dash-card--span2 dash-card--inventory">
-          <div className="dash-card-head">
+        <section className="db-card db-card-wide db-card-inv">
+          <div className="db-card-head">
             <div>
-              <h3 className="dash-card-title">Inventory Summary</h3>
-              <p className="dash-card-subtitle">Overview of products and stock levels</p>
+              <h3 className="db-card-title">Inventory Summary</h3>
+              <p className="db-card-sub">Overview of products and stock levels</p>
             </div>
           </div>
 
-          <div className="summary-cards">
-            <div className="summary-tile">
-              <div className="summary-tile-body">
-                <div className="summary-tile-value">{totalProducts}</div>
+          <div className="sum-grid">
+            <div className="sum-card">
+              <div className="sum-body">
+                <div className="sum-value">{totalProducts}</div>
               </div>
-              <div className="summary-tile-footer">Total Products</div>
+              <div className="sum-foot">Total Products</div>
             </div>
 
-            <div className="summary-tile">
-              <div className="summary-tile-body">
-                <div className="summary-tile-value">{totalStocks}</div>
+            <div className="sum-card">
+              <div className="sum-body">
+                <div className="sum-value">{totalStocks}</div>
               </div>
-              <div className="summary-tile-footer">Total Stocks</div>
+              <div className="sum-foot">Total Stocks</div>
             </div>
 
-            <div className="summary-tile">
-              <div className="summary-tile-body">
-                <div className="summary-tile-value">{lowStockProducts.length}</div>
-                <div className="summary-tile-sub">
+            <div className="sum-card">
+              <div className="sum-body">
+                <div className="sum-value">{lowStockProducts.length}</div>
+                <div className="sum-sub">
                   {lowStockProducts.length ? "Needs attention" : "All good"}
                 </div>
               </div>
-              <div className="summary-tile-footer">Low Stock Alert</div>
+              <div className="sum-foot">Low Stock Alert</div>
             </div>
           </div>
 
-          <div className="low-stock-list">
+          <div className="low-list">
             {lowStockProducts.length ? (
               lowStockProducts.map((p) => (
-                <div key={p.name} className="low-stock-item">
-                  <span className="low-stock-name">{p.name}</span>
-                  <span className="low-stock-pill">Low Stock ({p.stock} remaining)</span>
+                <div key={p.name} className="low-item">
+                  <span className="low-name">{p.name}</span>
+                  <span className="low-pill">Low Stock ({p.stock} remaining)</span>
                 </div>
               ))
             ) : (
-              <div className="low-stock-empty">No low-stock products right now.</div>
+              <div className="low-empty">No low-stock products right now.</div>
             )}
           </div>
         </section>
 
         {/* Today's Client Note */}
-        <section className="dash-card">
-          <div className="dash-card-head">
-            <div className="dash-card-titleRow">
-              <h3 className="dash-card-title">Today's Client Schedule</h3>
-              <span className="dash-chip">
+        <section className="db-card">
+          <div className="db-card-head">
+            <div className="db-card-row">
+              <h3 className="db-card-title">Today's Client Schedule</h3>
+              <span className="db-chip">
                 <FiClock />
                 Today
               </span>
             </div>
-            <p className="dash-card-subtitle">Appointments scheduled for today</p>
+            <p className="db-card-sub">Appointments scheduled for today</p>
           </div>
 
-          <div className="client-note">
+          <div className="note">
             {todaysAppointments.length ? (
               todaysAppointments.map((appt, idx) => (
-                <div key={`${appt.client}-${idx}`} className="client-note-item">
-                  <div className="client-note-title">{appt.client}</div>
-                  <div className="client-note-sub">Service: {appt.service}</div>
+                <div key={`${appt.client}-${idx}`} className="note-item">
+                  <div className="note-title">{appt.client}</div>
+                  <div className="note-sub">Service: {appt.service}</div>
                 </div>
               ))
             ) : (
-              <div className="client-note-empty">No client appointments scheduled for today.</div>
+              <div className="note-empty">No client appointments scheduled for today.</div>
             )}
           </div>
         </section>
 
         {/* Quick Actions */}
-        <section className="dash-card">
-          <div className="dash-card-head">
-            <h3 className="dash-card-title">Quick Actions</h3>
-            <p className="dash-card-subtitle">Jump to key areas of the system</p>
+        <section className="db-card">
+          <div className="db-card-head">
+            <h3 className="db-card-title">Quick Actions</h3>
+            <p className="db-card-sub">Jump to key areas of the system</p>
           </div>
 
-          <div className="quick-actions-grid">
+          <div className="qa-grid">
             <button className="qa-btn" onClick={() => setActiveTab("products")} type="button">
               <span className="qa-icon qa-icon--indigo">
-                <FiBox />
+                <img
+                  src="/product.png"
+                  alt="Products"
+                  className="qa-icon-img"
+                />
               </span>
               <span className="qa-text">
                 <span className="qa-title">Manage Products</span>
@@ -189,7 +186,11 @@ const Dashboard = ({ setActiveTab, userRole }) => {
 
             <button className="qa-btn" onClick={() => setActiveTab("inventory")} type="button">
               <span className="qa-icon qa-icon--green">
-                <FiPackage />
+                <img
+                  src="/inventory.png"
+                  alt="Inventory"
+                  className="qa-icon-img"
+                />
               </span>
               <span className="qa-text">
                 <span className="qa-title">View Inventory</span>
@@ -199,7 +200,11 @@ const Dashboard = ({ setActiveTab, userRole }) => {
 
             <button className="qa-btn" onClick={() => setActiveTab("clients")} type="button">
               <span className="qa-icon qa-icon--blue">
-                <FiUsers />
+                <img
+                  src="/client.png"
+                  alt="Clients"
+                  className="qa-icon-img"
+                />
               </span>
               <span className="qa-text">
                 <span className="qa-title">View Clients</span>
@@ -209,7 +214,11 @@ const Dashboard = ({ setActiveTab, userRole }) => {
 
             <button className="qa-btn" onClick={() => setActiveTab("transactions")} type="button">
               <span className="qa-icon qa-icon--amber">
-                <FiFileText />
+                <img
+                  src="/transactions.png"
+                  alt="Transactions"
+                  className="qa-icon-img"
+                />
               </span>
               <span className="qa-text">
                 <span className="qa-title">View History</span>
@@ -220,10 +229,10 @@ const Dashboard = ({ setActiveTab, userRole }) => {
         </section>
 
         {/* Sales per Month Graph */}
-        <section className="dash-card dash-card--span2 dash-card--sales">
-          <div className="dash-card-head">
-            <h3 className="dash-card-title">Sales per Month</h3>
-            <p className="dash-card-subtitle">Sample monthly sales overview</p>
+        <section className="db-card db-card-wide db-card-sales">
+          <div className="db-card-head">
+            <h3 className="db-card-title">Sales per Month</h3>
+            <p className="db-card-sub">Sample monthly sales overview</p>
           </div>
 
           <div className="sales-chart" role="img" aria-label="Bar chart of sales per month">

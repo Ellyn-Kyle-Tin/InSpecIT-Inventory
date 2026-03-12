@@ -121,9 +121,9 @@ const Products = () => {
       {/* HEADER */}
       <div className="products-top">
 
-        <div className="products-title">
-          <img src="/red_product.png" alt="product" />
-          <h2>Products</h2>
+        <div className="db-title2">
+          <img src="/product.png" alt="Products" className="db-title-icon2" />
+          <h2 className="db-title-text2">Products</h2>
         </div>
 
         <div className="products-search">

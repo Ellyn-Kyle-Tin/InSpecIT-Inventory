@@ -104,10 +104,6 @@ body {
   overflow: hidden; 
 }
 
-/* Sidebar Styles */
-/* (moved to src/components/sidebar.css) */
-
-/* Main Content */
 .main-content {
   flex: 1;
   padding: 2rem;

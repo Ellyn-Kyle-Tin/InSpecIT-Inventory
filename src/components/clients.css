@@ -1,28 +1,25 @@
-/* Clients Component Styles */
-
 .clients-container {
-  padding: 20px;
+  padding: 12px;
+  margin-top: -16px;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+.db-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:0;
 }
 
-.page-header-icon {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(15%) sepia(94%) saturate(7158%) hue-rotate(352deg) brightness(92%) contrast(86%);
+.db-title-icon{
+  width:34px;
+  height:34px;
+  object-fit:contain;
+  filter: brightness(0) saturate(100%) invert(11%) sepia(83%) saturate(5901%) hue-rotate(347deg) brightness(92%) contrast(111%);
 }
 
-.page-header-title {
-  margin: 0;
-  color: #dc2626;
-  font-size: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
+.db-title-text{
+  font-size:2rem;
+  font-weight:900;
+  color:#AE040F;
+  letter-spacing:-0.3px;
 }
-

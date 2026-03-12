@@ -1,11 +1,19 @@
 import { useState } from "react";
 import "./login.css";
-import { simpleRegister } from "../simpleAuth";
 
 export default function AuthPage({ onLogin }) {
   const [isRegister, setIsRegister] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const API_BASE =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/inventory/api";
+
+  const [loginNotice, setLoginNotice] = useState("");
+  const [loginWarning, setLoginWarning] = useState("");
+  const [loginFieldErrors, setLoginFieldErrors] = useState({
+    username: false,
+    password: false,
+  });
   
   // Register form state
   const [formData, setFormData] = useState({
@@ -21,17 +29,54 @@ export default function AuthPage({ onLogin }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
 
-  const switchToRegister = () => setIsRegister(true);
-  const switchToLogin = () => setIsRegister(false);
+  const switchToRegister = () => {
+    setLoginNotice("");
+    setLoginWarning("");
+    setLoginFieldErrors({ username: false, password: false });
+    setIsRegister(true);
+  };
+  const switchToLogin = () => {
+    setLoginNotice("");
+    setLoginWarning("");
+    setLoginFieldErrors({ username: false, password: false });
+    setIsRegister(false);
+  };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Check for admin credentials
-    if (username === "admin" && password === "123") {
-      onLogin("admin", "admin", "Admin");
-    } else {
-      alert("Invalid username or password");
+    setLoginNotice("");
+    setLoginWarning("");
+    setLoginFieldErrors({ username: false, password: false });
+
+    try {
+      const res = await fetch(`${API_BASE}/login.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams({ username, password }).toString(),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data?.success) {
+        const msg = (data?.message || "").toString()
+        const isInvalidCreds = res.status === 401 || msg.toLowerCase().includes("invalid")
+
+        if (res.status === 401) {
+          const field = data?.errorField === "password" ? "password" : "username"
+          setLoginWarning(msg || (field === "password" ? "Incorrect password." : "Incorrect username."))
+          setLoginFieldErrors({
+            username: field === "username",
+            password: field === "password",
+          })
+          return
+        }
+
+        alert(msg || "Invalid username or password")
+        return
+      }
+
+      onLogin(data.user.username, data.user.role, data.user.fullName || data.user.username)
+    } catch (err) {
+      console.error(err)
     }
   };
 
@@ -72,27 +117,39 @@ export default function AuthPage({ onLogin }) {
     setLoading(true)
 
     try {
-      await simpleRegister(
-        formData.username,
-        formData.password,
-        formData.fullName,
-        formData.email,
-        formData.role
-      )
+      const res = await fetch(`${API_BASE}/register.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams({
+          username: formData.username,
+          password: formData.password,
+          fullName: formData.fullName,
+          email: formData.email,
+          role: formData.role,
+        }).toString(),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data?.success) {
+        const msg = data?.message || "Registration failed"
+        if (msg.toLowerCase().includes("username") || msg.toLowerCase().includes("email")) {
+          setFieldErrors(prev => ({ ...prev, username: true, email: true }))
+        }
+        if (msg.toLowerCase().includes("role")) {
+          setFieldErrors(prev => ({ ...prev, role: true }))
+        }
+        alert(msg)
+        return
+      }
       
       alert("Registration successful! Please login with your new account.")
       switchToLogin()
     } catch (error) {
       console.error("Registration error:", error)
-      if (error.message === "Username already exists") {
-        setFieldErrors(prev => ({ ...prev, username: true }))
-        alert("Username already exists. Please choose a different username.")
-      } else if (error.message.includes("Invalid role")) {
-        setFieldErrors(prev => ({ ...prev, role: true }))
-        alert("Please select a valid role (Employee or Admin).")
-      } else {
-        alert("Registration failed. Please try again.")
-      }
+      const details =
+        error?.message ||
+        "Could not reach the API. Check the API base URL/port and that Apache is running."
+      alert(`Registration failed.\n\nAPI: ${API_BASE}\nError: ${details}`)
     } finally {
       setLoading(false)
     }
@@ -115,6 +172,45 @@ export default function AuthPage({ onLogin }) {
         <div className={`form-box ${isRegister ? "hidden" : "visible"}`}>
           <h1>Log In</h1>
 
+          {loginWarning ? (
+            <div
+              role="alert"
+              style={{
+                marginBottom: 12,
+                padding: "10px 12px",
+                borderRadius: 10,
+                background: "#fef2f2",
+                border: "1px solid #fecaca",
+                color: "#991b1b",
+                fontSize: 14,
+                lineHeight: 1.35,
+              }}
+            >
+              {loginWarning}
+            </div>
+          ) : null}
+
+          {loginNotice ? (
+            <div
+              role="status"
+              style={{
+                marginBottom: 12,
+                padding: "10px 12px",
+                borderRadius: 10,
+                background: "#fff7ed",
+                border: "1px solid #fed7aa",
+                color: "#9a3412",
+                fontSize: 14,
+                lineHeight: 1.35,
+              }}
+            >
+              <div style={{ marginBottom: 8 }}>{loginNotice}</div>
+              <button type="button" className="btn-primary" onClick={switchToRegister}>
+                Create account
+              </button>
+            </div>
+          ) : null}
+
           <form onSubmit={handleLogin}>
             <div className="field">
               <label>Username:</label>
@@ -123,7 +219,15 @@ export default function AuthPage({ onLogin }) {
                 placeholder="Enter your username"
                 autoComplete="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                className={loginFieldErrors.username ? "error" : ""}
+                onChange={(e) => {
+                  setUsername(e.target.value)
+                  if (loginNotice) setLoginNotice("")
+                  if (loginWarning) setLoginWarning("")
+                  if (loginFieldErrors.username) {
+                    setLoginFieldErrors((prev) => ({ ...prev, username: false }))
+                  }
+                }}
                 required
               />
             </div>
@@ -135,7 +239,15 @@ export default function AuthPage({ onLogin }) {
                 placeholder="Enter your password"
                 autoComplete="current-password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                className={loginFieldErrors.password ? "error" : ""}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  if (loginNotice) setLoginNotice("")
+                  if (loginWarning) setLoginWarning("")
+                  if (loginFieldErrors.password) {
+                    setLoginFieldErrors((prev) => ({ ...prev, password: false }))
+                  }
+                }}
                 required
               />
             </div>

@@ -31,7 +31,7 @@ const EmployeeDashboard = ({ onLogout, userName }) => {
         />
         <main className="main-content">
           {/* For now employees only see the dashboard overview in read-only mode */}
-          <Dashboard setActiveTab={setActiveTab} isEmployee={true} userName={userName} />
+          <Dashboard setActiveTab={setActiveTab} userRole="employee" userName={userName} />
         </main>
       </div>
     </div>
