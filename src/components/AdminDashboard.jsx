@@ -5,9 +5,11 @@ import Inventory from "./Inventory"
 import Transaction from "./Transaction"
 import Products from "./Products"
 import Clients from "./Clients"
+import Projects from "./Projects"
 
 const AdminDashboard = ({ onLogout, userName, userRole }) => {
   const [activeTab, setActiveTab] = useState("dashboard")
+  const [selectedClient, setSelectedClient] = useState(null)
 
   const renderContent = () => {
     switch (activeTab) {
@@ -20,7 +22,10 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       case "transactions":
         return <Transaction />
       case "clients":
-        return <Clients />
+        if (selectedClient) {
+          return <Projects client={selectedClient} onBack={() => setSelectedClient(null)} />
+        }
+        return <Clients onSelectClient={(client) => setSelectedClient(client)} />
       default:
         return <Dashboard setActiveTab={setActiveTab} userName={userName} userRole={userRole} />
     }
@@ -30,7 +35,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
     <div className="admin-dashboard">
       <header className="header">
         <div className="header-left">
-          <img src="/logo.png" alt="Logo" className="header-logo" />
+          <img src="/InSpecIT_logo.png" alt="Logo" className="header-logo" />
           <div>
             <h1>Inventory System</h1>
             <p>Inventory Management System</p>
@@ -42,7 +47,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
       </header>
 
       <div className="dashboard-content">
-        <Sidebar 
+        <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onLogout={onLogout}

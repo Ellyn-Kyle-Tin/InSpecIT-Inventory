@@ -1,13 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./login.css";
-import { simpleRegister } from "../simpleAuth";
 
 export default function AuthPage({ onLogin }) {
   const [isRegister, setIsRegister] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   
+  // <-- Update API_BASE to point to your PHP API folder
+  const API_BASE =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:/InSpecIT-Inventory/api";
+
+  const [loginNotice, setLoginNotice] = useState("");
+  const [loginWarning, setLoginWarning] = useState("");
+  const [loginFieldErrors, setLoginFieldErrors] = useState({
+    username: false,
+    password: false,
+  });
+
   // Register form state
+  const initialRegisterForm = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    role: ""
+  };
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,100 +38,155 @@ export default function AuthPage({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
-  const switchToRegister = () => setIsRegister(true);
-  const switchToLogin = () => setIsRegister(false);
+  const resetRegisterForm = () => {
+    setFormData(initialRegisterForm);
+    setFieldErrors({});
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+    setLoading(false);
+  };
 
-  const handleLogin = (e) => {
+  const resetLoginForm = () => {
+    setUsername("");
+    setPassword("");
+    setLoginNotice("");
+    setLoginWarning("");
+    setLoginFieldErrors({ username: false, password: false });
+  };
+
+  useEffect(() => {
+    if (!registerSuccess) return;
+    const t = setTimeout(() => setRegisterSuccess(false), 2000);
+    return () => clearTimeout(t);
+  }, [registerSuccess]);
+
+  const switchToRegister = () => {
+    resetLoginForm();
+    setIsRegister(true);
+  };
+  const switchToLogin = () => {
+    resetRegisterForm();
+    setIsRegister(false);
+  };
+
+  // ==================== LOGIN ====================
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Check for admin credentials
-    if (username === "admin" && password === "123") {
-      onLogin("admin", "admin", "Admin");
-    } else {
-      alert("Invalid username or password");
+    setLoginNotice("");
+    setLoginWarning("");
+    setLoginFieldErrors({ username: false, password: false });
+
+    try {
+      const res = await fetch(`${API_BASE}/login.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, // <-- JSON header
+        body: JSON.stringify({ username, password }),    // <-- send JSON
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data?.success) {
+        const msg = (data?.message || "Invalid username or password").toString();
+
+        if (res.status === 401 || msg.toLowerCase().includes("incorrect")) {
+          const field = data?.errorField === "password" ? "password" : "username";
+          setLoginWarning(msg);
+          setLoginFieldErrors({
+            username: field === "username",
+            password: field === "password",
+          });
+          return;
+        }
+
+        alert(msg);
+        return;
+      }
+
+      // Successful login
+      onLogin(data.user.username, data.user.role, data.user.fullName || data.user.username);
+
+    } catch (err) {
+      console.error("Login error:", err);
+      alert("Could not reach the API. Make sure Apache is running and the URL is correct.");
     }
   };
 
+  // ==================== REGISTER ====================
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-    
-    // Clear field error when user starts typing
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
     if (fieldErrors[name]) {
-      setFieldErrors(prev => ({ ...prev, [name]: false }))
+      setFieldErrors(prev => ({ ...prev, [name]: false }));
     }
-  }
+  };
 
   const validateForm = () => {
-    const errors = {}
+    const errors = {};
     
-    if (!formData.username) errors.username = true
-    if (!formData.email) errors.email = true
-    if (!formData.password) errors.password = true
-    if (!formData.confirmPassword) errors.confirmPassword = true
-    if (!formData.fullName) errors.fullName = true
-    if (!formData.role) errors.role = true
-    
+    if (!formData.username) errors.username = true;
+    if (!formData.email) errors.email = true;
+    if (!formData.password) errors.password = true;
+    if (!formData.confirmPassword) errors.confirmPassword = true;
+    if (!formData.fullName) errors.fullName = true;
+    if (!formData.role) errors.role = true;
+
     if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = true
-      errors.password = true
+      errors.confirmPassword = true;
+      errors.password = true;
     }
-    
-    setFieldErrors(errors)
-    return Object.keys(errors).length === 0
-  }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleRegister = async () => {
-    if (!validateForm()) {
-      return
-    }
-
-    setLoading(true)
+    if (!validateForm()) return;
+    setLoading(true);
 
     try {
-      await simpleRegister(
-        formData.username,
-        formData.password,
-        formData.fullName,
-        formData.email,
-        formData.role
-      )
-      
-      alert("Registration successful! Please login with your new account.")
-      switchToLogin()
-    } catch (error) {
-      console.error("Registration error:", error)
-      if (error.message === "Username already exists") {
-        setFieldErrors(prev => ({ ...prev, username: true }))
-        alert("Username already exists. Please choose a different username.")
-      } else if (error.message.includes("Invalid role")) {
-        setFieldErrors(prev => ({ ...prev, role: true }))
-        alert("Please select a valid role (Employee or Admin).")
-      } else {
-        alert("Registration failed. Please try again.")
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
+      const res = await fetch(`${API_BASE}/register.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
+      const data = await res.json();
+
+      if (!res.ok || !data?.success) {
+        const msg = data?.message || "Registration failed";
+        alert(msg);
+        return;
+      }
+
+      // Show custom UI confirmation instead of browser alert
+      setRegisterSuccess(true);
+      switchToLogin();
+    } catch (err) {
+      console.error("Registration error:", err);
+      alert("Could not reach the API. Make sure Apache is running and the URL is correct.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ==================== JSX ====================
   return (
     <div className="auth-root">
-      {/* Background */}
       <div className="auth-bg" />
-
-      {/* Side Logo */}
       <div className={`side-text ${isRegister ? "move-right" : ""}`}>
         <img src="logo.png" alt="Logo" className="side-logo" />
       </div>
 
-      {/* Sliding White Panel */}
       <div className={`auth-panel ${isRegister ? "slide-left" : ""}`}>
-
         {/* LOGIN FORM */}
         <div className={`form-box ${isRegister ? "hidden" : "visible"}`}>
           <h1>Log In</h1>
+
+          {loginWarning && <div className="alert">{loginWarning}</div>}
+          {loginNotice && <div className="notice">{loginNotice}</div>}
 
           <form onSubmit={handleLogin}>
             <div className="field">
@@ -121,8 +194,8 @@ export default function AuthPage({ onLogin }) {
               <input
                 type="text"
                 placeholder="Enter your username"
-                autoComplete="username"
                 value={username}
+                className={loginFieldErrors.username ? "error" : ""}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
@@ -133,8 +206,8 @@ export default function AuthPage({ onLogin }) {
               <input
                 type="password"
                 placeholder="Enter your password"
-                autoComplete="current-password"
                 value={password}
+                className={loginFieldErrors.password ? "error" : ""}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
@@ -144,109 +217,116 @@ export default function AuthPage({ onLogin }) {
           </form>
 
           <p className="switch-line">
-            Don't have an account?{" "}
-            <button onClick={switchToRegister}>Register now</button>
+            Don't have an account? <button onClick={switchToRegister}>Register now</button>
           </p>
         </div>
 
         {/* REGISTER FORM */}
-        <div className={`form-box ${isRegister ? "visible" : "hidden"}`}>
-          <h1>
-            Sign Up
-          </h1>
+        <div className={`form-box form-box-register ${isRegister ? "visible" : "hidden"}`}>
+          <h1>Sign Up</h1>
+          <p className="subtitle">Create your account to get started.</p>
 
-          <div className="field">
-            <label>Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              placeholder="Enter your full name"
-              className={fieldErrors.fullName ? 'error' : ''}
-            />
+          <div className="register-fields">
+            <div className="register-col register-col-left">
+              <div className="field">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  className={fieldErrors.fullName ? "error" : ""}
+                />
+              </div>
+              <div className="field">
+                <label>Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Choose a username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  className={fieldErrors.username ? "error" : ""}
+                />
+              </div>
+              <div className="field">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={fieldErrors.email ? "error" : ""}
+                />
+              </div>
+            </div>
+            <div className="register-col register-col-right">
+              <div className="field">
+                <label>Password</label>
+                <div className="password-field-wrap">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Create a password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className={fieldErrors.password ? "error" : ""}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="toggle-password-btn"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div className="field">
+                <label>Confirm Password</label>
+                <div className="password-field-wrap">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className={
+                      fieldErrors.confirmPassword
+                        ? "error"
+                        : formData.confirmPassword && formData.password === formData.confirmPassword
+                          ? "password-match"
+                          : ""
+                    }
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="toggle-password-btn"
+                  >
+                    {showConfirmPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div className="field">
+                <label>Role</label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  className={fieldErrors.role ? "error" : ""}
+                >
+                  <option value="">Select your role</option>
+                  <option value="employee">Employee</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <div className="field">
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              placeholder="Choose a username"
-              className={fieldErrors.username ? 'error' : ''}
-            />
-          </div>
-
-          <div className="field">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="Enter your email"
-              className={fieldErrors.email ? 'error' : ''}
-            />
-          </div>
-
-          <div className="field" style={{ position: "relative" }}>
-            <label>Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder="Create a password"
-              style={{ paddingRight: "60px" }}
-              className={fieldErrors.password ? 'error' : ''}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="toggle-password-btn"
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
-
-          <div className="field" style={{ position: "relative" }}>
-            <label>Confirm Password</label>
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              placeholder="Confirm your password"
-              style={{ paddingRight: "60px" }}
-              className={fieldErrors.confirmPassword ? 'error' : ''}
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="toggle-password-btn"
-            >
-              {showConfirmPassword ? "Hide" : "Show"}
-            </button>
-          </div>
-
-          <div className="field">
-            <label>Role</label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              className={fieldErrors.role ? 'error' : ''}
-            >
-              <option value="">Select your role</option>
-              <option value="employee">Employee</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-          <button 
-            className="btn-primary" 
+          <button
+            className="btn-primary"
             onClick={handleRegister}
             disabled={loading}
           >
@@ -254,14 +334,21 @@ export default function AuthPage({ onLogin }) {
           </button>
 
           <p className="switch-line">
-            Already have an account?{" "}
-            <button onClick={switchToLogin}>Log in</button>
+            Already have an account? <button onClick={switchToLogin}>Log in</button>
           </p>
         </div>
-
       </div>
+
+      {registerSuccess && (
+        <div className="auth-toast" role="status" aria-live="polite">
+          <div className="auth-toast-card">
+            <div className="auth-toast-title">Account created</div>
+            <div className="auth-toast-text">
+              Registration successful! Please log in with your new account.
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-

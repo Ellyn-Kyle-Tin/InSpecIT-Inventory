@@ -1,8 +1,8 @@
-.clients-container {
+.projects-container {
   padding: 20px;
 }
 
-.db-title-client {
+.db-title-project {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -10,7 +10,7 @@
   margin-left: -30px;
 }
 
-.db-title-icon-client {
+.db-title-icon-project {
   width: 32px;
   height: 32px;
   flex-shrink: 0;
@@ -18,14 +18,67 @@
   filter: brightness(0) saturate(100%) invert(15%) sepia(94%) saturate(7158%) hue-rotate(352deg) brightness(92%) contrast(86%);
 }
 
-.page-header-title-client {
+.page-header-title-project {
   font-size: 2rem;
   font-weight: 900;
   color: #AE040F;
   letter-spacing: -0.3px;
 }
 
-.clients-content-card {
+.projects-subheader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  margin-left: -25px;
+  margin-bottom: 4px;
+}
+
+.projects-client-label {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  background: #555555;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #333333;
+}
+
+.add-btn-project {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  background: #c40000;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 140px;
+  margin-top: 10px;
+  margin-left: -25px;
+  margin-bottom: 8px;
+}
+
+.add-btn-project img {
+  width: 16px;
+}
+
+.projects-content-card {
   background: #ffffff;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -38,28 +91,7 @@
   flex-direction: column;
 }
 
-.add-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border: none;
-  background: #c40000;
-  color: white;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 130px;
-  margin-top: 12px;
-  margin-left: -25px;
-  margin-bottom: 8px;
-}
-
-.add-btn img {
-  width: 16px;
-}
-
-.transactions-inner-header {
+.projects-inner-header {
   background-color: #AE0404;
   border-radius: 5px;
   width: 100%;
@@ -72,7 +104,7 @@
   flex-shrink: 0;
 }
 
-.transactions-inner-header span {
+.projects-inner-header span {
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 650;
@@ -85,32 +117,32 @@
   justify-content: center;
 }
 
-.transactions-table-wrapper {
+.projects-table-wrapper {
   overflow-y: auto;
   flex: 1;
   margin-top: 0;
 }
 
-.transactions-table {
+.projects-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-.transactions-table tbody tr {
+.projects-table tbody tr {
   transition: background-color 0.15s ease;
 }
 
-.transactions-table tbody tr.row-even,
-.transactions-table tbody tr.row-odd {
+.projects-table tbody tr.row-even,
+.projects-table tbody tr.row-odd {
   background-color: #ffffff;
 }
 
-.transactions-table tbody tr:hover {
+.projects-table tbody tr:hover {
   background-color: #fce8e8;
 }
 
-.transactions-table td {
+.projects-table td {
   padding: 11px 0;
   font-size: 0.78rem;
   color: #333333;
@@ -121,11 +153,12 @@
   text-overflow: ellipsis;
 }
 
-.transactions-table td:nth-child(1) { width: 20%; text-align: center; }
-.transactions-table td:nth-child(2) { width: 20%; text-align: center; }
-.transactions-table td:nth-child(3) { width: 20%; text-align: center; }
-.transactions-table td:nth-child(4) { width: 20%; text-align: center; }
-.transactions-table td:nth-child(5) { width: 20%; text-align: center; }
+.projects-table td:nth-child(1) { width: 18%; text-align: center; }
+.projects-table td:nth-child(2) { width: 22%; text-align: center; }
+.projects-table td:nth-child(3) { width: 15%; text-align: center; }
+.projects-table td:nth-child(4) { width: 15%; text-align: center; }
+.projects-table td:nth-child(5) { width: 15%; text-align: center; }
+.projects-table td:nth-child(6) { width: 15%; text-align: center; }
 
 .status-badge {
   padding: 3px 10px;
@@ -162,11 +195,6 @@
   font-weight: 600;
   cursor: pointer;
   letter-spacing: 0.03rem;
-}
-
-.btn-projects {
-  background-color: #FFCD2A;
-  color: #333333;
 }
 
 .btn-edit {
