@@ -8,7 +8,7 @@ export default function AuthPage({ onLogin }) {
   
   // <-- Update API_BASE to point to your PHP API folder
   const API_BASE =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/InSpecIT-Inventory/api";
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:/InSpecIT-Inventory/api";
 
   const [loginNotice, setLoginNotice] = useState("");
   const [loginWarning, setLoginWarning] = useState("");
