@@ -10,6 +10,8 @@ const Sidebar = ({ activeTab, setActiveTab, userRole, userName, onLogout }) => {
   ]
 
   const employeeMenuItems = [
+    { id: "dashboard", label: "Dashboard", iconSrc: "/dashboard.png" },
+    { id: "products", label: "Products", iconSrc: "/product.png" },
   ]
 
   const menuItems = userRole === "admin" ? adminMenuItems : employeeMenuItems

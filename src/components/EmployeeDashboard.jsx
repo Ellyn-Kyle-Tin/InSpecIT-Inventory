@@ -1,10 +1,22 @@
 import { useState } from "react"
 import Sidebar from "./Sidebar"
 import Dashboard from "./Dashboard"
+import Products from "./Products"
 
 
 const EmployeeDashboard = ({ onLogout, userName }) => {
   const [activeTab, setActiveTab] = useState("dashboard")
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "dashboard":
+        return <Dashboard setActiveTab={setActiveTab} userRole="employee" userName={userName} />
+      case "products":
+        return <Products />
+      default:
+        return <Dashboard setActiveTab={setActiveTab} userRole="employee" userName={userName} />
+    }
+  }
 
   return (
     <div className="employee-dashboard">
@@ -29,10 +41,7 @@ const EmployeeDashboard = ({ onLogout, userName }) => {
           userName={userName}
           onLogout={onLogout}
         />
-        <main className="main-content">
-          {/* For now employees only see the dashboard overview in read-only mode */}
-          <Dashboard setActiveTab={setActiveTab} userRole="employee" userName={userName} />
-        </main>
+        <main className="main-content">{renderContent()}</main>
       </div>
     </div>
   )
