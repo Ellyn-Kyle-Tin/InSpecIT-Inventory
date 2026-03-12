@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from "react"
 import "./transactions.css"
-<<<<<<< HEAD
-=======
 import { FiFileText, FiChevronDown, FiChevronUp, FiSearch } from "react-icons/fi"
 
 const tabHeaders = {
@@ -159,7 +157,6 @@ const MovementCell = ({ movement }) => {
     </div>
   );
 };
->>>>>>> f65e6d6ee4c17645268bbb2ab5a749ef01f9ec7d
 
 const Transaction = () => {
   const [activeTab, setActiveTab]     = useState("order-history");
@@ -196,15 +193,9 @@ const Transaction = () => {
 
   return (
     <div className="transaction-records">
-<<<<<<< HEAD
-      <div className="db-title">
-        <img src="/transactions.png" alt="Transactions" className="db-title-icon" />
-        <h1 className="db-title-text">Transactions</h1>
-=======
       <div className="page-header-wrapper">
         <FiFileText size={32} className="page-header-icon4" />
         <h1 className="page-header-title-trans">Transactions</h1>
->>>>>>> f65e6d6ee4c17645268bbb2ab5a749ef01f9ec7d
       </div>
 
       <div className="transactions-topbar">
