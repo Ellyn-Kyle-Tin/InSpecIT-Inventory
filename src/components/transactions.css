@@ -21,12 +21,10 @@
 }
 
 .page-header-title-trans {
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  color: #AE0404;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size:2rem;
+  font-weight:900;
+  color:#AE040F;
+  letter-spacing:-0.3px;
 }
 
 /* Topbar: nav + search side by side */
