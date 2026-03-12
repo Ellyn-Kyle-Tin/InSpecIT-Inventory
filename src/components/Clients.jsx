@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import "./clients.css"
-import Projects from "./projects"
+import Projects from "./Projects"
 
 const sampleClients = [
   {
@@ -53,10 +53,17 @@ const Clients = ({ onSelectClient }) => {
                         className="action-btn btn-projects"
                         onClick={() => onSelectClient(client)}
                       >
+                        <img src="/project.png" alt="" className="btn-icon" />
                         Projects
                       </button>
-                      <button className="action-btn btn-edit">Edit</button>
-                      <button className="action-btn btn-delete">Delete</button>
+                      <button className="action-btn btn-edit">
+                        <img src="/edit.png" alt="" className="btn-icon" />
+                        Edit
+                      </button>
+                      <button className="action-btn btn-delete">
+                        <img src="/delete.png" alt="" className="btn-icon" />
+                        Delete
+                      </button>
                     </div>
                   </td>
                 </tr>
