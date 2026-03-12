@@ -30,7 +30,7 @@ const AdminDashboard = ({ onLogout, userName, userRole }) => {
     <div className="admin-dashboard">
       <header className="header">
         <div className="header-left">
-          <img src="/logo.png" alt="Logo" className="header-logo" />
+          <img src="/InSpecIT_logo.png" alt="Logo" className="header-logo" />
           <div>
             <h1>Inventory System</h1>
             <p>Inventory Management System</p>

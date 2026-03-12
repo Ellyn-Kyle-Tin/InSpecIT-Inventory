@@ -27,7 +27,10 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const datePickerRef = useRef(null);
 
-  const data = Array(8).fill({
+  // store selected row
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const data = Array(18).fill({
     code: "SH-1C120-TxL-A1BK",
     name: "Cable",
     desc: "1 CORE x 120 MM2 BLACK COLOR",
@@ -270,9 +273,9 @@ const Products = () => {
           <tbody>
             {filteredData.map((item, index) => (
               <tr
-                key={`${item.code}-${index}`}
-                className={selectedProductRow === index ? "active-row" : ""}
-                onClick={() => setSelectedProductRow((prev) => (prev === index ? null : index))}
+                key={index}
+                className={selectedProduct === index ? "active-row" : ""}
+                onClick={() => setSelectedProduct(index)}
               >
                 <td>{item.code}</td>
                 <td>{item.name}</td>
