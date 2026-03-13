@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+```css
+/* Products Component Styles */
+
+=======
+>>>>>>> 56771b898e442b1b8443aa1ad48d012f26c21a80
 .products-container {
   padding: 12px;
   margin-top: -16px;
@@ -111,19 +117,8 @@
   box-shadow:0 2px 6px rgba(196,0,0,0.15);
 }
 
-.date-btn.active{
-  border-color:#a00000;
-  box-shadow:0 2px 8px rgba(196,0,0,0.2);
-}
-
-.date-btn:active{
-  transform:scale(0.98);
-}
-
 .date-btn img{
   width:18px;
-  height:18px;
-  flex-shrink:0;
 }
 
 .date-text{
@@ -132,6 +127,7 @@
   font-size:14px;
 }
 
+<<<<<<< HEAD
 .chevron-icon{
   width:18px;
   height:18px;
@@ -443,10 +439,14 @@
   color:#c40000;
   border-radius:3px;
 }
+=======
+/* ADD BUTTON */
+>>>>>>> 5826d8b0ce67914c381264206e4f0e78e5d96f74
 
 .add-btn{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
   padding:8px 16px;
   border:none;
@@ -459,6 +459,9 @@
 
 .add-btn img{
   width:16px;
+  height:16px;
+  object-fit:contain;
+  display:block;
 }
 
 /* TABLE */
@@ -471,8 +474,6 @@
   max-height:350px;
   overflow-y:auto;
 }
-
-/* TABLE STYLE */
 
 .products-table{
   width:100%;
@@ -495,22 +496,21 @@
   text-align:center;
   font-size:12px;
   border-bottom:1px solid #ddd;
+  vertical-align:middle;
 }
 
 .products-table tbody tr{
   border:2px solid #c40000;
   cursor:pointer;
-  transition:background 0.2s ease, transform 0.2s ease;
+  transition:background 0.2s ease;
 }
 
 .products-table tbody tr:hover{
   background:#ffe5e5;
 }
 
-/* active selected row (LIGHT RED) */
 .active-row{
   background:#ffd6d6;
-  transform:scale(1.005);
 }
 
 .active-row td{
@@ -518,10 +518,24 @@
   font-weight:600;
 }
 
-.products-table tbody tr:not(:last-child){
-  border-bottom:2px solid #c40000;
+/* =============================== */
+/* ADD PRODUCT MODAL */
+/* =============================== */
+
+.modal-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
 }
 
+<<<<<<< HEAD
 /* Responsive Design */
 @media (max-width: 1200px) {
   .products-container {
@@ -751,3 +765,190 @@
   }
 }
 
+=======
+.add-product-modal{
+  width:520px;
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+  animation:modalFade 0.25s ease;
+}
+
+/* MODAL HEADER */
+
+.add-product-modal h2{
+  background:#c40000;
+  color:white;
+  text-align:center;
+  padding:14px;
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+}
+
+/* FORM GRID */
+
+.modal-form{
+  padding:25px 35px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px 25px;
+}
+
+.form-row{
+  display:flex;
+  flex-direction:column;
+}
+
+.form-row.full{
+  grid-column:1 / span 2;
+}
+
+.form-row label{
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:3px;
+}
+
+.form-row input,
+.form-row select{
+  padding:8px 10px;
+  border:2px solid #c40000;
+  border-radius:6px;
+  font-size:12px;
+  outline:none;
+  background:white;
+}
+
+.form-row input::placeholder{
+  font-size:11px;
+  color:#888;
+}
+
+/* ERROR MESSAGE */
+
+.error{
+  color:red;
+  font-size:11px;
+  margin-top:3px;
+}
+
+/* BUTTONS */
+
+.modal-buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  padding-bottom:20px;
+}
+
+.save-btn{
+  background:#3bd137;
+  border:none;
+  padding:8px 20px;
+  color:white;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.save-btn:hover{
+  background:#30b82c;
+}
+
+.cancel-btn{
+  background:#c40000;
+  border:none;
+  padding:8px 20px;
+  color:white;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.cancel-btn:hover{
+  background:#a00000;
+}
+
+/* MODAL ANIMATION */
+
+@keyframes modalFade{
+  from{
+    opacity:0;
+    transform:scale(0.9);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* =============================== */
+/* ACTION BUTTONS */
+/* =============================== */
+
+.action-buttons{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+}
+
+/* EDIT BUTTON */
+
+.edit-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#f6c343;
+  color:white;
+  border:none;
+  font-size:10px;
+  font-weight:600;
+  border-radius:5px;
+  cursor:pointer;
+  width:45px;
+  height:38px;
+  padding:3px;
+}
+
+.edit-btn:hover{
+  background:#e0ac2f;
+}
+
+/* DELETE BUTTON */
+
+.delete-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#e53935;
+  color:white;
+  border:none;
+  font-size:10px;
+  font-weight:600;
+  border-radius:5px;
+  cursor:pointer;
+  width:45px;
+  height:38px;
+  padding:3px;
+}
+
+.delete-btn:hover{
+  background:#c62828;
+}
+
+/* ICON SIZE */
+
+.action-icon{
+  width:16px;
+  height:16px;
+  object-fit:contain;
+  margin-bottom:2px;
+}
+```
+>>>>>>> 5826d8b0ce67914c381264206e4f0e78e5d96f74

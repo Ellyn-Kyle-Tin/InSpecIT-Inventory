@@ -1,291 +1,421 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  addMonths,
-  eachDayOfInterval,
   endOfMonth,
   endOfWeek,
   format,
-  getMonth,
-  getYear,
-  isSameDay,
-  isSameMonth,
-  setMonth,
-  setYear,
   startOfMonth,
-  startOfWeek,
-  subMonths,
+  startOfWeek
 } from "date-fns";
-import { FiChevronDown, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import "./products.css";
 
 const Products = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [pendingSelectedDate, setPendingSelectedDate] = useState(new Date());
+
+  const [selectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedProductRow, setSelectedProductRow] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+
   const datePickerRef = useRef(null);
 
-  // store selected row
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
 
-  const data = Array(18).fill({
-    code: "SH-1C120-TxL-A1BK",
-    name: "Cable",
-    desc: "1 CORE x 120 MM2 BLACK COLOR",
-    category: "Hardware",
-    price: "Php 4,500.00",
-    stock: 3,
-    min: 3
+  const [products, setProducts] = useState(() => {
+    const saved = localStorage.getItem("products");
+    return saved ? JSON.parse(saved) : [];
   });
 
-  const formattedDate = format(selectedDate, "dd MMMM yyyy");
-  const monthNames = useMemo(
-    () => Array.from({ length: 12 }, (_, i) => format(new Date(2020, i, 1), "MMMM")),
-    []
-  );
-  const yearOptions = useMemo(() => {
-    const base = getYear(new Date());
-    const start = base - 10;
-    const end = base + 10;
-    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-  }, []);
+  const [errors, setErrors] = useState({});
 
-  const filteredData = useMemo(() => {
-    const q = searchTerm.trim().toLowerCase();
-    if (!q) return data;
-    return data.filter((item) => {
-      const haystack = [
-        item.code,
-        item.name,
-        item.desc,
-        item.category,
-        item.price,
-        String(item.stock),
-        String(item.min),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      return haystack.includes(q);
-    });
-  }, [data, searchTerm]);
+  const [form, setForm] = useState({
+    code: "",
+    name: "",
+    desc: "",
+    category: "",
+    price: "",
+    stock: "",
+    min: ""
+  });
 
-  // Generate calendar days
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(currentMonth);
-  const calendarStart = startOfWeek(monthStart);
-  const calendarEnd = endOfWeek(monthEnd);
-  const calendarDays = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
-
-  const handleDayPick = (day) => setPendingSelectedDate(day);
-
-  const handleConfirmDate = () => {
-    setSelectedDate(pendingSelectedDate);
-    setCurrentMonth(pendingSelectedDate);
-    setShowDatePicker(false);
-  };
-
-  const handlePrevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
-  };
-
-  const handleToday = () => {
-    const today = new Date();
-    setPendingSelectedDate(today);
-    setCurrentMonth(today);
-  };
-
-  // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
-        setShowDatePicker(false);
-      }
-    };
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
 
-    if (showDatePicker) {
-      document.addEventListener("mousedown", handleClickOutside);
+  const handleInput = (e) => {
+
+    const { name, value } = e.target;
+
+    let newValue = value;
+    let newErrors = { ...errors };
+
+    if (name === "name" || name === "desc") {
+
+      if (/[^a-zA-Z\s]/.test(value)) {
+        newErrors[name] = "Only letters allowed";
+        setErrors(newErrors);
+        return;
+      } else {
+        delete newErrors[name];
+      }
+
+      newValue = value.charAt(0).toUpperCase() + value.slice(1);
     }
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+    if (name === "price" || name === "stock" || name === "min") {
+
+      if (/[^0-9]/.test(value)) {
+        newErrors[name] = "Only numbers allowed";
+        setErrors(newErrors);
+        return;
+      } else {
+        delete newErrors[name];
+      }
+
+    }
+
+    if (name === "category") {
+
+      if (value === "") {
+        newErrors.category = "Please select a category";
+      } else {
+        delete newErrors.category;
+      }
+
+    }
+
+    setErrors(newErrors);
+
+    setForm(prev => ({
+      ...prev,
+      [name]: newValue
+    }));
+  };
+
+  const handleSaveProduct = () => {
+
+    let newErrors = {};
+
+    if (!form.code) newErrors.code = "Product number required";
+    if (!form.name) newErrors.name = "Name required";
+    if (!form.desc) newErrors.desc = "Description required";
+    if (!form.category) newErrors.category = "Select category";
+    if (!form.price) newErrors.price = "Price required";
+    if (!form.stock) newErrors.stock = "Stock required";
+    if (!form.min) newErrors.min = "Min stock required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const newProduct = {
+      code: form.code,
+      name: form.name,
+      desc: form.desc,
+      category: form.category,
+      price: "Php " + form.price,
+      stock: form.stock,
+      min: form.min
     };
-  }, [showDatePicker]);
+
+    if (editingIndex !== null) {
+
+      const updated = [...products];
+      updated[editingIndex] = newProduct;
+      setProducts(updated);
+      setEditingIndex(null);
+
+    } else {
+
+      setProducts(prev => [...prev, newProduct]);
+
+    }
+
+    setShowModal(false);
+
+    setForm({
+      code: "",
+      name: "",
+      desc: "",
+      category: "",
+      price: "",
+      stock: "",
+      min: ""
+    });
+
+    setErrors({});
+  };
+
+  const handleEdit = (index) => {
+
+    const product = products[index];
+
+    setForm({
+      code: product.code,
+      name: product.name,
+      desc: product.desc,
+      category: product.category,
+      price: product.price.replace("Php ", ""),
+      stock: product.stock,
+      min: product.min
+    });
+
+    setEditingIndex(index);
+    setShowModal(true);
+  };
+
+  const handleDelete = (index) => {
+
+    const confirmDelete = window.confirm("Delete this product?");
+
+    if (!confirmDelete) return;
+
+    const updatedProducts = products.filter((_, i) => i !== index);
+    setProducts(updatedProducts);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSaveProduct();
+  };
+
+  const filteredProducts = useMemo(() => {
+
+    if (!searchTerm) return products;
+
+    const search = searchTerm.toLowerCase();
+
+    return products.filter(product =>
+      product.code?.toLowerCase().includes(search) ||
+      product.name?.toLowerCase().includes(search) ||
+      product.desc?.toLowerCase().includes(search) ||
+      product.category?.toLowerCase().includes(search) ||
+      product.price?.toLowerCase().includes(search)
+    );
+
+  }, [searchTerm, products]);
+
+  const formattedDate = format(selectedDate, "dd MMMM yyyy");
+
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+
+  startOfWeek(monthStart);
+  endOfWeek(monthEnd);
 
   return (
+
     <div className="products-container">
 
-      {/* HEADER */}
+      {showModal && (
+
+        <div className="modal-overlay">
+
+          <div className="add-product-modal">
+
+            <h2>ADD PRODUCT</h2>
+
+            <form className="modal-form" onSubmit={handleSubmit}>
+
+              <div className="form-row">
+                <label>Product No.</label>
+                <input name="code" value={form.code} onChange={handleInput}/>
+                {errors.code && <p className="error">{errors.code}</p>}
+              </div>
+
+              <div className="form-row">
+                <label>Name</label>
+                <input name="name" value={form.name} onChange={handleInput}/>
+                {errors.name && <p className="error">{errors.name}</p>}
+              </div>
+
+              <div className="form-row">
+                <label>Description</label>
+                <input name="desc" value={form.desc} onChange={handleInput}/>
+                {errors.desc && <p className="error">{errors.desc}</p>}
+              </div>
+
+              <div className="form-row">
+                <label>Category</label>
+                <select name="category" value={form.category} onChange={handleInput}>
+                  <option value="">Select Category</option>
+                  <option value="Hardware">Hardware</option>
+                  <option value="Electrical">Electrical</option>
+                  <option value="Tools">Tools</option>
+                </select>
+                {errors.category && <p className="error">{errors.category}</p>}
+              </div>
+
+              <div className="form-row">
+                <label>Price</label>
+                <input name="price" value={form.price} onChange={handleInput}/>
+                {errors.price && <p className="error">{errors.price}</p>}
+              </div>
+
+              <div className="form-row">
+                <label>Stock</label>
+                <input name="stock" value={form.stock} onChange={handleInput}/>
+                {errors.stock && <p className="error">{errors.stock}</p>}
+              </div>
+
+              <div className="form-row">
+                <label>Min Stock</label>
+                <input name="min" value={form.min} onChange={handleInput}/>
+                {errors.min && <p className="error">{errors.min}</p>}
+              </div>
+
+              <div className="modal-buttons">
+
+                <button type="submit" className="save-btn">
+                  Save
+                </button>
+
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setShowModal(false)}
+                >
+                  Cancel
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      )}
+
       <div className="products-top">
 
-        <div className="db-title2">
-          <img src="/product.png" alt="Products" className="db-title-icon2" />
-          <h2 className="db-title-text2">Products</h2>
+        <div className="products-title">
+          <img src="/red_product.png" alt="product"/>
+          <h2>Products</h2>
         </div>
 
         <div className="products-search">
+
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search Product..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <img src="/search.png" alt="search" />
+
+          <img src="/search.png" alt="search"/>
+
         </div>
 
       </div>
 
-      {/* CONTROLS */}
       <div className="products-controls">
 
         <div className="date-picker-wrapper" ref={datePickerRef}>
-          <button 
-            className={`date-btn ${showDatePicker ? 'active' : ''}`}
+
+          <button
+            className="date-btn"
             onClick={() => {
-              setPendingSelectedDate(selectedDate);
               setCurrentMonth(selectedDate);
               setShowDatePicker(!showDatePicker);
             }}
-            type="button"
           >
-            <img src="/calendar.png" alt="calendar" />
-            <span className="date-text">{formattedDate}</span>
-            <FiChevronDown className={`chevron-icon ${showDatePicker ? 'rotated' : ''}`} />
+
+            <img src="/calendar.png" alt="calendar"/>
+
+            <span className="date-text">
+              {formattedDate}
+            </span>
+
+            <FiChevronDown />
+
           </button>
-          {showDatePicker && (
-            <div className="calendar-dropdown">
-              <div className="calendar-top">
-                <div className="calendar-title">Select Date</div>
-                <img className="calendar-top-icon" src="/calendar.png" alt="" />
-              </div>
 
-              <div className="calendar-controls">
-                <div className="calendar-selects">
-                  <label className="calendar-select">
-                    <span className="sr-only">Month</span>
-                    <select
-                      value={getMonth(currentMonth)}
-                      onChange={(e) => setCurrentMonth((prev) => setMonth(prev, Number(e.target.value)))}
-                    >
-                      {monthNames.map((m, idx) => (
-                        <option key={m} value={idx}>
-                          {m}
-                        </option>
-                      ))}
-                    </select>
-                    <FiChevronDown className="calendar-select-icon" />
-                  </label>
-
-                  <label className="calendar-select">
-                    <span className="sr-only">Year</span>
-                    <select
-                      value={getYear(currentMonth)}
-                      onChange={(e) => setCurrentMonth((prev) => setYear(prev, Number(e.target.value)))}
-                    >
-                      {yearOptions.map((y) => (
-                        <option key={y} value={y}>
-                          {y}
-                        </option>
-                      ))}
-                    </select>
-                    <FiChevronDown className="calendar-select-icon" />
-                  </label>
-                </div>
-
-                <div className="calendar-nav">
-                  <button className="calendar-nav-btn" onClick={handlePrevMonth} type="button" aria-label="Previous month">
-                    <FiChevronLeft />
-                  </button>
-                  <button className="calendar-nav-btn" onClick={handleNextMonth} type="button" aria-label="Next month">
-                    <FiChevronRight />
-                  </button>
-                </div>
-              </div>
-              
-              <div className="calendar-weekdays">
-                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                  <div key={day} className="calendar-weekday">{day}</div>
-                ))}
-              </div>
-              
-              <div className="calendar-days">
-                {calendarDays.map((day, idx) => {
-                  const isCurrentMonth = isSameMonth(day, currentMonth);
-                  const isSelected = isSameDay(day, pendingSelectedDate);
-                  const isToday = isSameDay(day, new Date());
-                  const isSunday = day.getDay() === 0;
-                  
-                  return (
-                    <button
-                      key={idx}
-                      className={`calendar-day ${!isCurrentMonth ? 'other-month' : ''} ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''} ${isSunday ? 'sunday' : ''}`}
-                      onClick={() => handleDayPick(day)}
-                      type="button"
-                    >
-                      {format(day, 'd')}
-                    </button>
-                  );
-                })}
-              </div>
-              
-              <div className="calendar-footer">
-                <button className="calendar-today-btn" onClick={handleToday} type="button">
-                  Today
-                </button>
-                <button className="calendar-confirm-btn" onClick={handleConfirmDate} type="button">
-                  Confirm
-                </button>
-              </div>
-            </div>
-          )}
         </div>
 
-        <button className="add-btn">
-          <img src="/add.png" alt="add" />
+        {/* ADD PRODUCT BUTTON */}
+
+        <button className="add-btn" onClick={() => setShowModal(true)}>
+
+          <span className="add-icon">
+            <img src="/add.png" alt="add"/>
+          </span>
+
           Add Product
+
         </button>
 
       </div>
 
-      {/* TABLE */}
       <div className="products-table-wrapper">
 
         <table className="products-table">
 
           <thead>
             <tr>
-              <th>NO.</th>
+              <th>PRODUCT NO.</th>
               <th>NAME</th>
               <th>DESCRIPTION</th>
               <th>CATEGORY</th>
               <th>PRICE</th>
               <th>STOCK</th>
               <th>MIN STOCK</th>
+              <th>ACTION</th>
             </tr>
           </thead>
 
           <tbody>
-            {filteredData.map((item, index) => (
-              <tr
-                key={index}
-                className={selectedProduct === index ? "active-row" : ""}
-                onClick={() => setSelectedProduct(index)}
-              >
-                <td>{item.code}</td>
-                <td>{item.name}</td>
-                <td>{item.desc}</td>
-                <td>{item.category}</td>
-                <td>{item.price}</td>
-                <td>{item.stock}</td>
-                <td>{item.min}</td>
+
+            {filteredProducts.length === 0 ? (
+
+              <tr>
+                <td colSpan="8" style={{ textAlign:"center", padding:"15px" }}>
+                  No products available
+                </td>
               </tr>
-            ))}
+
+            ) : (
+
+              filteredProducts.map((item, index) => (
+
+                <tr key={index}>
+
+                  <td>{item.code}</td>
+                  <td>{item.name}</td>
+                  <td>{item.desc}</td>
+                  <td>{item.category}</td>
+                  <td>{item.price}</td>
+                  <td>{item.stock}</td>
+                  <td>{item.min}</td>
+
+                  <td className="action-buttons">
+
+                    <button
+                      className="edit-btn"
+                      onClick={() => handleEdit(index)}
+                    >
+                      <img src="/edit.png" alt="edit" className="action-icon"/>
+                      Edit
+                    </button>
+
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(index)}
+                    >
+                      <img src="/delete.png" alt="delete" className="action-icon"/>
+                      Delete
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))
+
+            )}
+
           </tbody>
 
         </table>
@@ -293,7 +423,9 @@ const Products = () => {
       </div>
 
     </div>
+
   );
+
 };
 
 export default Products;
