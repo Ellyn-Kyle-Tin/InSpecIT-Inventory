@@ -177,7 +177,7 @@ export default function AuthPage({ onLogin }) {
     <div className="auth-root">
       <div className="auth-bg" />
       <div className={`side-text ${isRegister ? "move-right" : ""}`}>
-        <img src="logo.png" alt="Logo" className="side-logo" />
+        <img src="InSpecIT_logo.png" alt="Logo" className="side-logo" />
       </div>
 
       <div className={`auth-panel ${isRegister ? "slide-left" : ""}`}>
