@@ -435,3 +435,206 @@
 .modal_confirm:hover {
   background: #16a34a;
 }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .inventory_summary {
+    gap: 16px;
+  }
+  
+  .card_assets {
+    min-width: 180px;
+  }
+  
+  .card_products {
+    min-width: 240px;
+  }
+  
+  .table_wrap {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .inventory_root {
+    padding: 8px;
+    margin-top: -12px;
+  }
+  
+  .inventory_title {
+    gap: 8px;
+  }
+  
+  .inventory_icon {
+    width: 32px;
+    height: 30px;
+  }
+  
+  .inventory_text {
+    font-size: 1.6rem;
+  }
+  
+  .inventory_summary {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .inv_card {
+    padding: 16px 20px;
+  }
+  
+  .card_value {
+    font-size: 1.4rem;
+  }
+  
+  .inventory_controls {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .search_wrap {
+    min-width: 100%;
+  }
+  
+  .filter_wrap {
+    width: 100%;
+  }
+  
+  .filter_btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .table_wrap {
+    max-height: 350px;
+  }
+  
+  .table_main {
+    min-width: 800px;
+  }
+  
+  .table_main th {
+    padding: 12px 16px;
+    font-size: 0.7rem;
+  }
+  
+  .table_main td {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .status_pill {
+    min-width: 80px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  
+  .action_btn {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inventory_root {
+    padding: 4px;
+    margin-top: -8px;
+  }
+  
+  .inventory_head {
+    margin-bottom: 12px;
+  }
+  
+  .inventory_title {
+    gap: 6px;
+  }
+  
+  .inventory_icon {
+    width: 28px;
+    height: 26px;
+  }
+  
+  .inventory_text {
+    font-size: 1.3rem;
+  }
+  
+  .inv_card {
+    padding: 12px 16px;
+  }
+  
+  .card_label {
+    font-size: 0.8rem;
+  }
+  
+  .card_value {
+    font-size: 1.2rem;
+  }
+  
+  .bar_labels {
+    font-size: 0.7rem;
+    gap: 12px;
+  }
+  
+  .search_input {
+    padding: 8px 36px 8px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .filter_btn {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .table_wrap {
+    max-height: 300px;
+  }
+  
+  .table_main {
+    min-width: 600px;
+  }
+  
+  .table_main th {
+    padding: 8px 12px;
+    font-size: 0.65rem;
+  }
+  
+  .table_main td {
+    padding: 8px 8px;
+    font-size: 0.7rem;
+  }
+  
+  .status_pill {
+    min-width: 70px;
+    padding: 3px 6px;
+    font-size: 0.65rem;
+  }
+  
+  .action_btn {
+    padding: 3px 8px;
+    font-size: 0.7rem;
+  }
+  
+  /* Modal responsive */
+  .modal_card {
+    padding: 20px;
+    min-width: 280px;
+    margin: 20px;
+  }
+  
+  .modal_title {
+    font-size: 1.1rem;
+  }
+  
+  .modal_input {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .modal_cancel,
+  .modal_confirm {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+}

@@ -2,14 +2,41 @@ import React, { useEffect, useMemo, useState } from "react"
 import "./dashboard.css"
 import { FiClock } from "react-icons/fi"
 
-const Dashboard = ({ setActiveTab, userRole }) => {
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/InSpecIT-Inventory/api"
 
+const Dashboard = ({ setActiveTab, userRole }) => {
   const [now, setNow] = useState(() => new Date())
+  const [dashboardData, setDashboardData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000)
     return () => clearInterval(id)
   }, [])
+
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch(`${API_BASE}/dashboard.php`)
+      const data = await response.json()
+      
+      if (data.success) {
+        setDashboardData(data.data)
+      } else {
+        setError(data.message || 'Failed to load dashboard data')
+      }
+    } catch (err) {
+      setError('Failed to connect to server')
+      console.error('Dashboard data fetch error:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const date = now.toLocaleDateString("en-US", {
     weekday: "long",
@@ -22,50 +49,45 @@ const Dashboard = ({ setActiveTab, userRole }) => {
     minute: "2-digit",
   })
 
-  const products = useMemo(
-    () => [
-      { name: "Solar Panel", stock: 5 },
-      { name: "Solar Battery", stock: 120 },
-      { name: "Solar Inverter", stock: 195 },
-    ],
-    []
-  )
-
-  const totalProducts = products.length
-  const totalStocks = products.reduce((sum, p) => sum + p.stock, 0)
-  const lowStockThreshold = 10
-  const lowStockProducts = products.filter((p) => p.stock <= lowStockThreshold)
-
-  const todayKey = now.toISOString().slice(0, 10)
-  const clientAppointments = useMemo(
-    () => [
-      { date: todayKey, client: "Juan Dela Cruz", service: "Solar Installation" },
-      { date: todayKey, client: "Maria Santos", service: "CCTV Installation" },
-    ],
-    [todayKey]
-  )
-  const todaysAppointments = clientAppointments.filter((a) => a.date === todayKey)
-
-  const salesPerMonth = useMemo(
-    () => [
-      { month: "Jan", sales: 12000 },
-      { month: "Feb", sales: 18000 },
-      { month: "Mar", sales: 15000 },
-      { month: "Apr", sales: 22000 },
-      { month: "May", sales: 19500 },
-      { month: "Jun", sales: 26000 },
-      { month: "Jul", sales: 21000 },
-      { month: "Aug", sales: 28000 },
-      { month: "Sep", sales: 24000 },
-      { month: "Oct", sales: 30000 },
-      { month: "Nov", sales: 27000 },
-      { month: "Dec", sales: 32000 },
-    ],
-    []
-  )
-  const maxMonthlySales = Math.max(...salesPerMonth.map((d) => d.sales))
+  // Use real data or fallback to empty state
+  const inventory = dashboardData?.inventory || {}
+  const clients = dashboardData?.clients || {}
+  const projects = dashboardData?.projects || {}
 
   const welcomeMessage = userRole === "admin" ? "Welcome back, Admin!" : "Welcome back, Employee!"
+
+  if (loading) {
+    return (
+      <div className="db-wrap">
+        <div className="db-top">
+          <div className="db-title">
+            <img className="db-title-icon" src="/dashboard.png" alt="Dashboard" />
+            <span className="db-title-text">Dashboard</span>
+          </div>
+          <div className="db-header">
+            <h2 className="db-welcome">Loading dashboard...</h2>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="db-wrap">
+        <div className="db-top">
+          <div className="db-title">
+            <img className="db-title-icon" src="/dashboard.png" alt="Dashboard" />
+            <span className="db-title-text">Dashboard</span>
+          </div>
+          <div className="db-header">
+            <h2 className="db-welcome">Error loading dashboard</h2>
+            <p className="db-date">{error}</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="db-wrap">
@@ -98,23 +120,23 @@ const Dashboard = ({ setActiveTab, userRole }) => {
           <div className="sum-grid">
             <div className="sum-card">
               <div className="sum-body">
-                <div className="sum-value">{totalProducts}</div>
+                <div className="sum-value">{inventory.total_products || 0}</div>
               </div>
               <div className="sum-foot">Total Products</div>
             </div>
 
             <div className="sum-card">
               <div className="sum-body">
-                <div className="sum-value">{totalStocks}</div>
+                <div className="sum-value">{inventory.total_stocks || 0}</div>
               </div>
               <div className="sum-foot">Total Stocks</div>
             </div>
 
             <div className="sum-card">
               <div className="sum-body">
-                <div className="sum-value">{lowStockProducts.length}</div>
+                <div className="sum-value">{inventory.low_stock_count || 0}</div>
                 <div className="sum-sub">
-                  {lowStockProducts.length ? "Needs attention" : "All good"}
+                  {(inventory.low_stock_count || 0) > 0 ? "Needs attention" : "All good"}
                 </div>
               </div>
               <div className="sum-foot">Low Stock Alert</div>
@@ -122,11 +144,11 @@ const Dashboard = ({ setActiveTab, userRole }) => {
           </div>
 
           <div className="low-list">
-            {lowStockProducts.length ? (
-              lowStockProducts.map((p) => (
-                <div key={p.name} className="low-item">
-                  <span className="low-name">{p.name}</span>
-                  <span className="low-pill">Low Stock ({p.stock} remaining)</span>
+            {inventory.low_stock_items && inventory.low_stock_items.length > 0 ? (
+              inventory.low_stock_items.map((item) => (
+                <div key={item.product_name} className="low-item">
+                  <span className="low-name">{item.product_name}</span>
+                  <span className="low-pill">Low Stock ({item.stocks} remaining)</span>
                 </div>
               ))
             ) : (
@@ -135,29 +157,29 @@ const Dashboard = ({ setActiveTab, userRole }) => {
           </div>
         </section>
 
-        {/* Today's Client Note */}
+        {/* Recent Clients */}
         <section className="db-card">
           <div className="db-card-head">
             <div className="db-card-row">
-              <h3 className="db-card-title">Today's Client Schedule</h3>
+              <h3 className="db-card-title">Recent Clients</h3>
               <span className="db-chip">
                 <FiClock />
-                Today
+                Latest
               </span>
             </div>
-            <p className="db-card-sub">Appointments scheduled for today</p>
+            <p className="db-card-sub">Recently added clients</p>
           </div>
 
           <div className="note">
-            {todaysAppointments.length ? (
-              todaysAppointments.map((appt, idx) => (
-                <div key={`${appt.client}-${idx}`} className="note-item">
-                  <div className="note-title">{appt.client}</div>
-                  <div className="note-sub">Service: {appt.service}</div>
+            {clients.recent_clients && clients.recent_clients.length > 0 ? (
+              clients.recent_clients.map((client, idx) => (
+                <div key={`${client.client_name}-${idx}`} className="note-item">
+                  <div className="note-title">{client.client_name}</div>
+                  <div className="note-sub">Status: {client.status}</div>
                 </div>
               ))
             ) : (
-              <div className="note-empty">No client appointments scheduled for today.</div>
+              <div className="note-empty">No clients found.</div>
             )}
           </div>
         </section>
@@ -228,24 +250,71 @@ const Dashboard = ({ setActiveTab, userRole }) => {
           </div>
         </section>
 
-        {/* Sales per Month Graph */}
-        <section className="db-card db-card-wide db-card-sales">
+        {/* Summary Statistics */}
+        <section className="db-card">
           <div className="db-card-head">
-            <h3 className="db-card-title">Sales per Month</h3>
-            <p className="db-card-sub">Sample monthly sales overview</p>
+            <h3 className="db-card-title">Summary Statistics</h3>
+            <p className="db-card-sub">Overall system overview</p>
           </div>
 
-          <div className="sales-chart" role="img" aria-label="Bar chart of sales per month">
-            {salesPerMonth.map((d) => (
-              <div key={d.month} className="sales-bar">
-                <div
-                  className="sales-bar-fill"
-                  style={{ height: `${Math.round((d.sales / maxMonthlySales) * 100)}%` }}
-                  title={`${d.month}: ${d.sales.toLocaleString()}`}
-                />
-                <div className="sales-bar-label">{d.month}</div>
+          <div className="stats-grid">
+            <div className="stat-item">
+              <div className="stat-value">{clients.total_clients || 0}</div>
+              <div className="stat-label">Total Clients</div>
+              <div className="stat-sub">{clients.active_clients || 0} active</div>
+            </div>
+
+            <div className="stat-item">
+              <div className="stat-value">{projects.total_projects || 0}</div>
+              <div className="stat-label">Total Projects</div>
+              <div className="stat-sub">{projects.active_projects || 0} active</div>
+            </div>
+
+            <div className="stat-item">
+              <div className="stat-value">{projects.completed_projects || 0}</div>
+              <div className="stat-label">Completed</div>
+              <div className="stat-sub">Projects done</div>
+            </div>
+
+            <div className="stat-item">
+              <div className="stat-value">{projects.pending_projects || 0}</div>
+              <div className="stat-label">Pending</div>
+              <div className="stat-sub">Projects pending</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Recent Projects */}
+        <section className="db-card db-card-wide">
+          <div className="db-card-head">
+            <div className="db-card-row">
+              <h3 className="db-card-title">Recent Projects</h3>
+              <span className="db-chip">
+                <FiClock />
+                Latest
+              </span>
+            </div>
+            <p className="db-card-sub">Recently added projects</p>
+          </div>
+
+          <div className="projects-list">
+            {projects.recent_projects && projects.recent_projects.length > 0 ? (
+              <div className="projects-grid">
+                {projects.recent_projects.map((project, idx) => (
+                  <div key={`${project.project_name}-${idx}`} className="project-item">
+                    <div className="project-name">{project.project_name}</div>
+                    <div className="project-client">Client: {project.client_name}</div>
+                    <div className="project-status">
+                      <span className={`status-badge ${project.status === "Active" ? "status-active" : "status-inactive"}`}>
+                        {project.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <div className="note-empty">No projects found.</div>
+            )}
           </div>
         </section>
       </div>

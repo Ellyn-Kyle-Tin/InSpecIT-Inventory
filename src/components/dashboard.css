@@ -454,3 +454,519 @@
   .sales-chart{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
   .db-card-sales{ max-width:100%; }
 }
+
+/* Enhanced Responsive Design */
+@media (max-width: 1200px) {
+  .db-wrap {
+    padding: 8px;
+    margin-top: -12px;
+  }
+  
+  .db-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .db-title {
+    margin-bottom: 8px;
+  }
+  
+  .db-title-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .db-title-text {
+    font-size: 1.8rem;
+  }
+  
+  .sum-grid {
+    gap: 10px;
+  }
+  
+  .sum-card {
+    min-height: 120px;
+  }
+  
+  .sum-value {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .db-wrap {
+    padding: 6px;
+    margin-top: -8px;
+  }
+  
+  .db-title {
+    gap: 8px;
+    margin-top: -20px;
+    margin-left: -10px;
+  }
+  
+  .db-title-icon {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .db-title-text {
+    font-size: 1.5rem;
+  }
+  
+  .db-welcome {
+    font-size: 18px;
+    padding-right: 20px;
+  }
+  
+  .db-date {
+    font-size: 11px;
+    padding-right: 20px;
+  }
+  
+  .db-grid {
+    gap: 12px;
+  }
+  
+  .db-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  
+  .db-card-title {
+    font-size: 12px;
+  }
+  
+  .db-card-sub {
+    font-size: 11px;
+  }
+  
+  .sum-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .sum-card {
+    min-height: 100px;
+  }
+  
+  .sum-body {
+    padding: 14px 10px;
+  }
+  
+  .sum-value {
+    font-size: 28px;
+  }
+  
+  .sum-sub {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  
+  .sum-foot {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+  
+  .low-list {
+    margin-top: 8px;
+    padding-top: 8px;
+    gap: 6px;
+  }
+  
+  .low-item {
+    padding: 8px 10px;
+  }
+  
+  .low-name {
+    font-size: 12px;
+  }
+  
+  .low-pill {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .note-item {
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .note-title {
+    font-size: 12px;
+  }
+  
+  .note-sub {
+    font-size: 11px;
+    margin-top: 3px;
+  }
+  
+  .qa-grid {
+    gap: 8px;
+  }
+  
+  .qa-btn {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .qa-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .qa-title {
+    font-size: 12px;
+  }
+  
+  .qa-sub {
+    font-size: 11px;
+  }
+  
+  .sales-chart {
+    height: 180px;
+    gap: 6px;
+    padding: 6px 4px 2px;
+  }
+  
+  .sales-bar {
+    height: 120px;
+  }
+  
+  .sales-bar-fill {
+    max-width: 20px;
+  }
+  
+  .sales-bar-label {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .db-wrap {
+    padding: 4px;
+    margin-top: -6px;
+  }
+  
+  .db-top {
+    margin-bottom: 6px;
+  }
+  
+  .db-title {
+    gap: 6px;
+    margin-top: -15px;
+    margin-left: -5px;
+  }
+  
+  .db-title-icon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .db-title-text {
+    font-size: 1.2rem;
+  }
+  
+  .db-welcome {
+    font-size: 16px;
+    padding-right: 10px;
+    text-align: left;
+    margin-left: 10px;
+  }
+  
+  .db-date {
+    font-size: 10px;
+    padding-right: 10px;
+    text-align: left;
+    margin-left: 10px;
+  }
+  
+  .db-grid {
+    gap: 8px;
+  }
+  
+  .db-card {
+    padding: 8px;
+    border-radius: 8px;
+  }
+  
+  .db-card-head {
+    margin-bottom: 8px;
+  }
+  
+  .db-card-title {
+    font-size: 11px;
+  }
+  
+  .db-card-sub {
+    font-size: 10px;
+    margin-top: 4px;
+  }
+  
+  .db-chip {
+    padding: 4px 6px;
+    font-size: 10px;
+    gap: 4px;
+  }
+  
+  .sum-card {
+    min-height: 80px;
+  }
+  
+  .sum-body {
+    padding: 10px 6px;
+  }
+  
+  .sum-value {
+    font-size: 24px;
+  }
+  
+  .sum-sub {
+    font-size: 10px;
+    margin-top: 4px;
+  }
+  
+  .sum-foot {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+  
+  .low-item {
+    padding: 6px 8px;
+    border-radius: 6px;
+  }
+  
+  .low-name {
+    font-size: 11px;
+  }
+  
+  .low-pill {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  
+  .note-item {
+    padding: 8px;
+    border-radius: 8px;
+  }
+  
+  .note-title {
+    font-size: 11px;
+  }
+  
+  .note-sub {
+    font-size: 10px;
+  }
+  
+  .qa-btn {
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .qa-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .qa-title {
+    font-size: 11px;
+  }
+  
+  .qa-sub {
+    font-size: 10px;
+  }
+  
+  .sales-chart {
+    height: 140px;
+    gap: 4px;
+    padding: 4px 2px 1px;
+  }
+  
+  .sales-bar {
+    height: 100px;
+  }
+  
+  .sales-bar-fill {
+    max-width: 16px;
+  }
+  
+  .sales-bar-label {
+    font-size: 8px;
+  }
+}
+
+/* New Dashboard Styles */
+
+/* Statistics Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 12px 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 2px;
+}
+
+.stat-sub {
+  font-size: 10px;
+  color: #64748b;
+}
+
+/* Projects List */
+.projects-list {
+  margin-top: 16px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.project-item {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.project-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.project-client {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.project-status {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Status Badge for Projects */
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-inactive {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Responsive Design for New Sections */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  
+  .stat-item {
+    padding: 8px 4px;
+  }
+  
+  .stat-value {
+    font-size: 18px;
+  }
+  
+  .stat-label {
+    font-size: 10px;
+  }
+  
+  .stat-sub {
+    font-size: 8px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .project-item {
+    padding: 8px;
+  }
+  
+  .project-name {
+    font-size: 12px;
+  }
+  
+  .project-client {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    gap: 6px;
+  }
+  
+  .stat-item {
+    padding: 6px 2px;
+  }
+  
+  .stat-value {
+    font-size: 16px;
+  }
+  
+  .stat-label {
+    font-size: 9px;
+  }
+  
+  .stat-sub {
+    font-size: 7px;
+  }
+  
+  .project-item {
+    padding: 6px;
+  }
+  
+  .project-name {
+    font-size: 11px;
+  }
+  
+  .project-client {
+    font-size: 9px;
+  }
+  
+  .status-badge {
+    font-size: 8px;
+    padding: 1px 6px;
+  }
+}

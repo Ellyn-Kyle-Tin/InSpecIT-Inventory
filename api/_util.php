@@ -5,7 +5,7 @@ function send_json(int $status, array $payload): void {
   http_response_code($status);
   header('Content-Type: application/json; charset=utf-8');
   header('Access-Control-Allow-Origin: *');
-  header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+  header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
   header('Access-Control-Allow-Headers: Content-Type, Authorization');
   echo json_encode($payload);
   exit;
@@ -32,6 +32,15 @@ function require_post(): void {
     send_json(200, ['success' => true]);
   }
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    send_json(405, ['success' => false, 'message' => 'Method not allowed']);
+  }
+}
+
+function require_methods(array $allowed_methods): void {
+  if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    send_json(200, ['success' => true]);
+  }
+  if (!in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
     send_json(405, ['success' => false, 'message' => 'Method not allowed']);
   }
 }

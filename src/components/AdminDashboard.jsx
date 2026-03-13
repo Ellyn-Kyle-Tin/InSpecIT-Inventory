@@ -7,6 +7,7 @@ import Products from "./Products"
 import Clients from "./Clients"
 import Projects from "./Projects"
 
+
 const AdminDashboard = ({ onLogout, userName, userRole }) => {
   const [activeTab, setActiveTab] = useState("dashboard")
   const [selectedClient, setSelectedClient] = useState(null)

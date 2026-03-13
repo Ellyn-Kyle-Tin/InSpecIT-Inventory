@@ -28,7 +28,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
-  // Check existing username/email in register table
   $stmt = $pdo->prepare('SELECT id FROM `register` WHERE username = ? OR email = ? LIMIT 1');
   $stmt->execute([$username, $email]);
   $existing = $stmt->fetch();
@@ -43,7 +42,6 @@ try {
   $stmt = $pdo->prepare('INSERT INTO `register` (full_name, username, email, password, role) VALUES (?, ?, ?, ?, ?)');
   $stmt->execute([$full_name, $username, $email, $hash, $role]);
 
-  // Also populate login table (as requested)
   $stmt = $pdo->prepare('INSERT INTO `login` (username, password) VALUES (?, ?)');
   $stmt->execute([$username, $hash]);
 

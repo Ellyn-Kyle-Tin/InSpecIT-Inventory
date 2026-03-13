@@ -215,9 +215,9 @@
 }
 
 .calendar-select select{
-  appearance:none;
-  -webkit-appearance:none;
   -moz-appearance:none;
+  -webkit-appearance:none;
+  appearance:none;
   border:0;
   outline:0;
   background:#f1f1f1;
@@ -487,6 +487,7 @@
 .products-table th{
   padding:10px;
   font-size:13px;
+  text-align: center;
 }
 
 .products-table td{
@@ -519,5 +520,234 @@
 
 .products-table tbody tr:not(:last-child){
   border-bottom:2px solid #c40000;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .products-container {
+    padding: 10px;
+    margin-top: -12px;
+  }
+  
+  .products-table-wrapper {
+    max-height: 320px;
+    padding: 15px;
+  }
+  
+  .products-table th {
+    font-size: 12px;
+    padding: 8px;
+  }
+  
+  .products-table td {
+    font-size: 11px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    padding: 8px;
+    margin-top: -10px;
+  }
+  
+  .db-title2 {
+    gap: 8px;
+  }
+  
+  .db-title-icon2 {
+    width: 32px;
+    height: 30px;
+  }
+  
+  .db-title-text2 {
+    font-size: 1.6rem;
+  }
+  
+  .products-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .products-search input {
+    padding: 6px 30px 6px 10px;
+    font-size: 0.9rem;
+    width: 200px;
+  }
+  
+  .products-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .date-btn {
+    min-width: 180px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .add-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .products-table-wrapper {
+    padding: 12px;
+    max-height: 280px;
+  }
+  
+  .products-table th {
+    font-size: 11px;
+    padding: 6px 4px;
+  }
+  
+  .products-table td {
+    font-size: 10px;
+    padding: 6px 4px;
+  }
+  
+  .calendar-dropdown {
+    min-width: 240px;
+    padding: 10px;
+  }
+  
+  .calendar-title {
+    font-size: 18px;
+  }
+  
+  .calendar-day {
+    font-size: 11px;
+    min-height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    padding: 4px;
+    margin-top: -8px;
+  }
+  
+  .db-title2 {
+    gap: 6px;
+  }
+  
+  .db-title-icon2 {
+    width: 28px;
+    height: 26px;
+  }
+  
+  .db-title-text2 {
+    font-size: 1.3rem;
+  }
+  
+  .products-search input {
+    width: 100%;
+    padding: 6px 28px 6px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .products-search img {
+    right: 6px;
+    width: 14px;
+  }
+  
+  .date-btn {
+    min-width: 150px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .date-btn img {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .add-btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .add-btn img {
+    width: 14px;
+  }
+  
+  .products-table-wrapper {
+    padding: 8px;
+    max-height: 250px;
+  }
+  
+  .products-table th {
+    font-size: 10px;
+    padding: 4px 2px;
+  }
+  
+  .products-table td {
+    font-size: 9px;
+    padding: 4px 2px;
+  }
+  
+  .products-table tbody tr {
+    border-width: 1px;
+  }
+  
+  .products-table tbody tr:not(:last-child) {
+    border-bottom-width: 1px;
+  }
+  
+  /* Calendar responsive */
+  .calendar-dropdown {
+    min-width: 200px;
+    padding: 8px;
+    margin: 4px;
+  }
+  
+  .calendar-title {
+    font-size: 16px;
+  }
+  
+  .calendar-top-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .calendar-select {
+    min-width: 80px;
+  }
+  
+  .calendar-select select {
+    padding: 5px 24px 5px 8px;
+    font-size: 11px;
+  }
+  
+  .calendar-nav-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .calendar-weekday {
+    font-size: 9px;
+    padding: 5px 0;
+  }
+  
+  .calendar-day {
+    font-size: 10px;
+    min-height: 22px;
+  }
+  
+  .calendar-today-btn {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  
+  .calendar-confirm-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
 }
 

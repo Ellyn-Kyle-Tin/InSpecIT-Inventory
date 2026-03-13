@@ -20,10 +20,11 @@
 
 /* User info + logout button area at the bottom of the sidebar */
 .sidebar-user {
-  padding: 0.9rem 1.75rem;
+  padding: 0.4rem 1.75rem;
   border-top: 1px solid #e5e7eb;
   font-size: 0.9rem;
   display: flex;
+  margin-bottom: -12px;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
@@ -54,7 +55,7 @@
   color: white;
   border: none;
   border-radius: 6px;
-  margin-top: 15px;
+  margin-top: 2px;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -130,4 +131,115 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: #AE040F;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu-toggle:hover {
+  background: #b91c1c;
+}
+
+/* Overlay for mobile sidebar */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .sidebar-overlay.active {
+    display: block;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar.active {
+    left: 0;
+  }
+  
+  .nav-item {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .nav-icon {
+    width: 32px;
+    height: 32px;
+    margin-left: 0;
+  }
+  
+  .nav-icon-img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .sidebar-user {
+    padding: 1rem;
+    margin-top: auto;
+  }
+  
+  .sidebar-logout-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 280px;
+    left: -280px;
+  }
+  
+  .sidebar.active {
+    left: 0;
+  }
+  
+  .nav-item {
+    padding: 0.9rem 0.75rem;
+    font-size: 0.95rem;
+  }
+  
+  .nav-label {
+    font-size: 0.9rem;
+  }
+  
+  .sidebar-user-info {
+    font-size: 0.8rem;
+  }
+  
+  .sidebar-user-name {
+    font-size: 0.75rem;
+  }
 }
