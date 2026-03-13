@@ -59,7 +59,7 @@
   width: 16px;
 }
 
-.transactions-inner-header {
+.clients-inner-header {
   background-color: #AE0404;
   border-radius: 5px;
   width: 100%;
@@ -72,7 +72,7 @@
   flex-shrink: 0;
 }
 
-.transactions-inner-header span {
+.clients-inner-header span {
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 650;
@@ -85,32 +85,32 @@
   justify-content: center;
 }
 
-.transactions-table-wrapper {
+.clients-table-wrapper {
   overflow-y: auto;
   flex: 1;
   margin-top: 0;
 }
 
-.transactions-table {
+.clients-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-.transactions-table tbody tr {
+.clients-table tbody tr {
   transition: background-color 0.15s ease;
 }
 
-.transactions-table tbody tr.row-even,
-.transactions-table tbody tr.row-odd {
+.clients-table tbody tr.row-even,
+.clients-table tbody tr.row-odd {
   background-color: #ffffff;
 }
 
-.transactions-table tbody tr:hover {
+.clients-table tbody tr:hover {
   background-color: #fce8e8;
 }
 
-.transactions-table td {
+.clients-table td {
   padding: 11px 0;
   font-size: 0.78rem;
   color: #333333;
@@ -121,9 +121,9 @@
   text-overflow: ellipsis;
 }
 
-.transactions-table td:nth-child(1) { width: 20%; text-align: center; }
+.clients-table td:nth-child(1) { width: 20%; text-align: center; }
 
-.transactions-table td:nth-child(2) {
+.clients-table td:nth-child(2) {
   width: 20%;
   text-align: center;
   white-space: normal;
@@ -133,9 +133,9 @@
   text-overflow: unset;
 }
 
-.transactions-table td:nth-child(3) { width: 20%; text-align: center; }
-.transactions-table td:nth-child(4) { width: 20%; text-align: center; }
-.transactions-table td:nth-child(5) { width: 20%; text-align: center; }
+.clients-table td:nth-child(3) { width: 20%; text-align: center; }
+.clients-table td:nth-child(4) { width: 20%; text-align: center; }
+.clients-table td:nth-child(5) { width: 20%; text-align: center; }
 
 .status-badge {
   padding: 3px 10px;

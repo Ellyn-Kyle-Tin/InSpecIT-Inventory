@@ -26,7 +26,7 @@ const Clients = ({ onSelectClient }) => {
       </button>
 
       <div className="clients-content-card">
-        <div className="transactions-inner-header">
+        <div className="clients-inner-header">
           <span>CLIENT NAME</span>
           <span>ADDRESS</span>
           <span>TIN</span>
@@ -34,8 +34,8 @@ const Clients = ({ onSelectClient }) => {
           <span>ACTION</span>
         </div>
 
-        <div className="transactions-table-wrapper">
-          <table className="transactions-table">
+        <div className="clients-table-wrapper">
+          <table className="clients-table">
             <tbody>
               {sampleClients.map((client, index) => (
                 <tr key={client.id} className={index % 2 === 0 ? "row-even" : "row-odd"}>
